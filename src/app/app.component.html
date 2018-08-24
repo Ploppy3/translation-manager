@@ -1,20 +1,60 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<form id="language-creator" *ngIf="showLanguageCreator == true" [formGroup]="formLanguage" (ngSubmit)="createNewLanguage()"
+  [@collapse]>
+  <div class="row inner-spacer center-items">
+    <div class="grow primary">Create Language</div>
+    <button type="button" class="icon" (click)="showLanguageCreator = false">
+      <i class="material-icons">close</i>
+    </button>
+  </div>
+  <div class="col spacer">
+    <input type="text" formControlName="name" placeholder="Name (eg: English)" autocomplete="off">
+    <ng-container *ngIf="formLanguage.controls['name'].errors != null">
+      <div class="error" *ngIf="formLanguage.controls['name'].errors['required']" [@collapse]>Required</div>
+      <div class="error" *ngIf="formLanguage.controls['name'].errors['forbiddenName']" [@collapse]>Exists already</div>
+    </ng-container>
+    <input type="text" formControlName="nameFile" placeholder="File's name (eg: en)" autocomplete="off">
+    <div *ngIf="formLanguage.controls['nameFile'].pristine && formLanguage.controls['name'].value.length > 0" [@collapse]>Default
+      value will be used: {{formLanguage.controls['name'].value}}.json</div>
+    <div>
+      <button class="button row center-items" [disabled]="formLanguage.invalid">
+        <i class="material-icons">add</i>
+        <span>create new language</span>
+      </button>
+    </div>
+  </div>
+</form>
 
+<div id="wrapper-tabs" class="row overflow">
+  <div class="row inner-spacer center-items" [class.selected]="language == selectedLanguage" [class.clickable]="selectedLanguage != language"
+    *ngFor="let language of languages" (click)="selectedLanguage = language">
+    <div *ngIf="language != baseLanguage" class="status" [class.success]="language == baseLanguage || language.errorCount == 0"
+      [class.error]="language.errorCount > 0"></div>
+    <span>{{language.name}}</span>
+    <ng-container *ngIf="language == baseLanguage">*</ng-container>
+  </div>
+  <i class="material-icons clickable" *ngIf="showLanguageCreator == false" (click)="showLanguageCreator = true" [@collapse]>add</i>
+</div>
+
+<div id="content" class="col inner-spacer">
+  <div class="row inner-spacer center-items">
+    <button class="outline row inner-spacer center-items" (click)="uploader.click()">
+      <span>import json</span>
+    </button>
+    <button class="outline row inner-spacer center-items" (click)="downloadJson()">
+      <span>download json</span>
+    </button>
+    <button class="outline row inner-spacer center-items" (click)="deleteLanguage()">
+      <i class="material-icons">delete</i>
+      <span>delete language</span>
+    </button>
+    <button *ngIf="selectedLanguage != baseLanguage" class="outline row inner-spacer center-items" (click)="setBaseLanguage()">
+      <i class="material-icons">star</i>
+      <span>set as base language</span>
+    </button>
+  </div>
+  <app-kop [kop]="selectedLanguage.kop" [language]="selectedLanguage.name" [isBaseLanguage]="selectedLanguage == baseLanguage">Root</app-kop>
+  <!--
+  <pre>{{selectedLanguage.kop|json}}</pre>
+  -->
+</div>
+<input #uploader type="file" (change)="onUpload($event)" hidden>

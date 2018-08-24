@@ -1,1 +1,104 @@
-/* You can add global styles to this file, and also import other style files */
+@import './framework.scss';
+@import './variables.scss';
+body {
+  font-family: 'Roboto', sans-serif;
+  overflow-y: scroll;
+  background-color: #37474F;
+  color: #fff;
+}
+* {
+  user-select: none;
+  &:focus {
+    outline: none;
+  }
+}
+span {
+  display: inline-block;
+}
+input {
+  height: 32px;
+  padding: 0 8px;
+  color: rgba($color: #000000, $alpha: .87);
+  font-size: 1em;
+  border-radius: 4px;
+  min-width: 150px;
+  /*
+  background-color: transparent;
+  border: 1px solid #ddd;
+  //*/
+  //*
+  background-color: #CFD8DC;
+  border: none; //*/
+}
+button {
+  cursor: pointer;
+  font-size: 1em;
+  background-color: transparent;
+  border: none;
+  &.button {
+    border-radius: 8px;
+    padding: 0 8px;
+    min-height: 34px;
+    color: rgba($color: #000000, $alpha: .87);
+    border: none;
+    background-color: $accent;
+    &:disabled {
+      background-color: #9E9E9E;
+      border-color: #9E9E9E;
+      cursor: not-allowed;
+    }
+  }
+  &.outline {
+    border-radius: 8px;
+    padding: 0 8px;
+    min-height: 34px;
+    /*
+    color: $accent;
+    border: 1px solid $accent;
+    //*/
+    color: rgba($color: #000000, $alpha: .87);
+    background-color: $accent;
+  }
+  &.icon {
+    padding: 4px;
+    border-radius: 16px; //color: $accent;
+    color: $accent;
+    &:disabled {
+      color: #9E9E9E;
+      cursor: not-allowed;
+    }
+  }
+}
+pre {
+  overflow: auto;
+}
+.primary-text {
+  color: #fff;
+}
+.secondary {
+  color: rgba($color: #fff, $alpha: .75);
+}
+.primary {
+  color: $primary;
+}
+.accent {
+  color: $accent;
+}
+.error {
+  color: $error;
+}
+.success {
+  color: $success;
+}
+.padding {
+  padding: 8px;
+}
+.mono {
+  font-family: 'Roboto Mono', monospace;
+}
+.material-icons {
+  vertical-align: middle;
+}
+.bold {
+  font-weight: bold;
+}

@@ -1,0 +1,7 @@
+@import '../../../variables.scss';
+:host {
+  display: block;
+}
+.red {
+  color: $error;
+}

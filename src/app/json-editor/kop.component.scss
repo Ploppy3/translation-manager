@@ -1,0 +1,16 @@
+:host {
+  display: block;
+  overflow: auto;
+}
+#content {
+  padding-left: 16px;
+  margin-left: 16px;
+  border-left: 1px solid rgba($color: #fff, $alpha: .24);
+  &>* {
+    margin-top: 1px;
+    margin-bottom: 1px;
+  }
+}
+#input-key {
+  max-width: 150px;
+}

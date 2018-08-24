@@ -1,0 +1,129 @@
+/// Padding related to .horizontal-spacer & .vertical-spacer rules
+$spacer-padding: 8px;
+html,
+body {
+  min-height: 100%;
+}
+body {
+  margin: 0;
+}
+* {
+  box-sizing: border-box;
+}
+/// Quick flex display row
+.row {
+  display: flex; //overflow: auto;
+  &.spacer {
+    padding-left: $spacer-padding;
+    padding-right: $spacer-padding;
+    >* {
+      margin-left: $spacer-padding;
+      margin-right: $spacer-padding;
+    }
+  }
+  &.inner-spacer {
+    >* {
+      margin-left: $spacer-padding/2;
+      margin-right: $spacer-padding/2;
+    }
+    >*:first-child {
+      margin-left: 0;
+      margin-right: $spacer-padding/2;
+    }
+    >*:last-child {
+      margin-left: $spacer-padding/2;
+      margin-right: 0;
+    }
+    >*:only-child {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+}
+/// Quick flex display column
+.col {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  &.spacer {
+    padding-top: $spacer-padding;
+    padding-bottom: $spacer-padding;
+    >* {
+      margin-top: $spacer-padding;
+      margin-bottom: $spacer-padding;
+    }
+  }
+  &.inner-spacer {
+    >* {
+      margin-top: $spacer-padding/2;
+      margin-bottom: $spacer-padding/2
+    }
+    >*:first-child {
+      margin-top: 0;
+      margin-bottom: $spacer-padding/2;
+    }
+    >*:last-child {
+      margin-top: $spacer-padding/2;
+      margin-bottom: 0;
+    }
+    >*:only-child {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+}
+.row,
+.col {
+  &.center-items {
+    align-items: center;
+  }
+  &.wrap {
+    flex-wrap: wrap;
+  }
+  &.justify-center {
+    justify-content: center;
+  }
+  >.grow {
+    flex-grow: 1;
+    flex-basis: 0;
+  }
+  >.no-shrink {
+    flex-shrink: 0;
+  }
+  >.self-center {
+    align-self: center;
+  }
+}
+/// Transform text to uppercase
+.uppercase {
+  text-transform: uppercase;
+}
+/// Centers the text of the element
+.center-text {
+  text-align: center;
+}
+/// Shows cursor on element
+.clickable {
+  cursor: pointer;
+}
+/// Sets the element to 100% width
+.max-width {
+  width: 100%;
+}
+/// Sets the element to 100% height
+.max-height {
+  height: 100%;
+}
+/// Pushes element to a unique GPU layer.
+.gpu-layer {
+  will-change: transform;
+}
+/// Prevent content overflow,overflowing content will be accessible via scroll-bars
+.overflow {
+  overflow: auto;
+  will-change: transform;
+}
+/// Prevent content overflow, overflow is hidden
+.no-overflow {
+  overflow: hidden;
+}
