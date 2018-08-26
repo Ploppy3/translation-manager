@@ -1,3 +1,12 @@
 :host {
   display: block;
 }
+form {
+  align-items: flex-start;
+}
+#missingKey {
+  line-height: 32px;
+}
+#missingValue {
+  padding-left: 8px;
+}
