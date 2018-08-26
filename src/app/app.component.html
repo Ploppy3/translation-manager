@@ -1,16 +1,16 @@
 <div id="wrapper-actions" class="row inner-spacer center-items">
-  <button class="outline row inner-spacer center-items" (click)="inputImportProject.click()">
+  <button class="button row inner-spacer center-items" (click)="inputImportProject.click()">
     <i class="material-icons">open_in_browser</i>
     <span>import project</span>
     <input #inputImportProject hidden type="file" (change)="onImportProject($event)">
   </button>
-  <button class="outline row inner-spacer center-items" *ngIf="languages.length > 0" (click)="exportProject()">
+  <button class="button row inner-spacer center-items" *ngIf="languages.length > 0" (click)="exportProject()">
     <i class="material-icons">save_alt</i>
     <span>export project</span>
   </button>
-  <button class="outline row inner-spacer center-items" *ngIf="languages.length > 1" (click)="exportLanguages()">
+  <button class="button row inner-spacer center-items" *ngIf="languages.length > 1" (click)="exportLanguages()">
     <i class="material-icons">save_alt</i>
-    <span>download languages</span>
+    <span>export languages</span>
   </button>
 </div>
 
@@ -70,19 +70,19 @@
       File: <input type="text" [(ngModel)]="selectedLanguage.fileName" placeholder="File's name">.json
     </div>
     <div class="row inner-spacer center-items">
-      <button class="outline row inner-spacer center-items" (click)="uploader.click()">
+      <button class="button row inner-spacer center-items" (click)="uploader.click()">
         <i class="material-icons">open_in_browser</i>
         <span>import json</span>
       </button>
-      <button class="outline row inner-spacer center-items" (click)="exportLanguage(selectedLanguage)">
+      <button class="button row inner-spacer center-items" (click)="exportLanguage(selectedLanguage)">
         <i class="material-icons">save_alt</i>
         <span>export json</span>
       </button>
-      <button class="outline row inner-spacer center-items" (click)="deleteLanguage()">
+      <button class="button row inner-spacer center-items" (click)="deleteLanguage()">
         <i class="material-icons">delete</i>
         <span>delete language</span>
       </button>
-      <button *ngIf="selectedLanguage != baseLanguage" class="outline row inner-spacer center-items" (click)="setBaseLanguage()">
+      <button *ngIf="selectedLanguage != baseLanguage" class="button row inner-spacer center-items" (click)="setBaseLanguage()">
         <i class="material-icons">star</i>
         <span>set as base language</span>
       </button>

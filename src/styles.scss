@@ -39,19 +39,6 @@ button {
     border-radius: 8px;
     padding: 0 8px;
     min-height: 34px;
-    color: rgba($color: #000000, $alpha: .87);
-    border: none;
-    background-color: $accent;
-    &:disabled {
-      background-color: #9E9E9E;
-      border-color: #9E9E9E;
-      cursor: not-allowed;
-    }
-  }
-  &.outline {
-    border-radius: 8px;
-    padding: 0 8px;
-    min-height: 34px;
     /*
     color: $accent;
     border: 1px solid $accent;
