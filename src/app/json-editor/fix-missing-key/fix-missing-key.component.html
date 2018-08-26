@@ -1,4 +1,4 @@
-<form class="red row inner-spacer center-items" #formFixMissingKVP="ngForm" (ngSubmit)="onFix.next(model_formFixMissingKVP)">
+<form class="error row inner-spacer center-items" #formFixMissingKVP="ngForm" (ngSubmit)="onFix.next(model_formFixMissingKVP)">
   <span class="mono">{{missingKey.key}}</span>
   <input type="hidden" [(ngModel)]="model_formFixMissingKVP.key" name="key">
   <input #inputValue class="grow" type="text" [(ngModel)]="model_formFixMissingKVP.value" name="value" [placeholder]="missingKey.value"
@@ -7,3 +7,6 @@
     <i class="material-icons">send</i>
   </button>
 </form>
+<div *ngIf="model_formFixMissingKVP.value != null">
+  {{missingKey.value}}
+</div>

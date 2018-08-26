@@ -22,3 +22,14 @@ export function isNullOrUndefined(obj: any) {
   if (obj === undefined || obj === null) return true;
   return false;
 }
+
+export function downloadUrl(url: string, fileName: string) {
+  let a;
+  a = document.createElement('a');
+  a.href = url;
+  a.download = fileName;
+  document.body.appendChild(a);
+  a.style = 'display: none';
+  a.click();
+  a.remove();
+};

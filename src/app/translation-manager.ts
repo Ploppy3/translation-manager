@@ -2,14 +2,16 @@ import { LangKOP, LangKVP, Lang } from "src/app/structure";
 import { isString, isObject } from "src/app/util";
 
 export function fixAllLanguages(baseLanguage: Lang, languages: Lang[]) {
-  fixLanguage(baseLanguage, baseLanguage);
-  languages.forEach(language => {
-    if (language != baseLanguage) {
-      let start = performance.now();
-      fixLanguage(baseLanguage, language)
-      console.log('fix took', performance.now() - start, 'ms');
-    }
-  })
+  if (baseLanguage) {
+    fixLanguage(baseLanguage, baseLanguage);
+    languages.forEach(language => {
+      if (language != baseLanguage) {
+        let start = performance.now();
+        fixLanguage(baseLanguage, language)
+        console.log('fix took', performance.now() - start, 'ms');
+      }
+    })
+  }
 }
 
 export function fixLanguage(baseLang: Lang, lang: Lang) {

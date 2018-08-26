@@ -1,20 +1,43 @@
-<form id="language-creator" *ngIf="showLanguageCreator == true" [formGroup]="formLanguage" (ngSubmit)="createNewLanguage()"
-  [@collapse]>
+<div id="wrapper-actions" class="row inner-spacer center-items">
+  <button class="outline row inner-spacer center-items" (click)="inputImportProject.click()">
+    <i class="material-icons">open_in_browser</i>
+    <span>import project</span>
+    <input #inputImportProject hidden type="file" (change)="onImportProject($event)">
+  </button>
+  <button class="outline row inner-spacer center-items" *ngIf="languages.length > 0" (click)="exportProject()">
+    <i class="material-icons">save_alt</i>
+    <span>export project</span>
+  </button>
+  <button class="outline row inner-spacer center-items" *ngIf="languages.length > 1" (click)="exportLanguages()">
+    <i class="material-icons">save_alt</i>
+    <span>download languages</span>
+  </button>
+</div>
+
+<form id="language-creator" *ngIf="showLanguageCreator == true || languages.length == 0" [formGroup]="formLanguage" (ngSubmit)="createNewLanguage()"
+  [@collapse] (@collapse.done)="showLanguageCreator ? inputNameLanguage.focus() : null">
   <div class="row inner-spacer center-items">
     <div class="grow primary">Create Language</div>
-    <button type="button" class="icon" (click)="showLanguageCreator = false">
+    <button type="button" class="icon" *ngIf="languages.length > 0" (click)="showLanguageCreator = false">
       <i class="material-icons">close</i>
     </button>
   </div>
   <div class="col spacer">
-    <input type="text" formControlName="name" placeholder="Name (eg: English)" autocomplete="off">
+    <input #inputNameLanguage type="text" formControlName="name" placeholder="Name (eg: English)" autocomplete="off">
     <ng-container *ngIf="formLanguage.controls['name'].errors != null">
       <div class="error" *ngIf="formLanguage.controls['name'].errors['required']" [@collapse]>Required</div>
       <div class="error" *ngIf="formLanguage.controls['name'].errors['forbiddenName']" [@collapse]>Exists already</div>
     </ng-container>
-    <input type="text" formControlName="nameFile" placeholder="File's name (eg: en)" autocomplete="off">
-    <div *ngIf="formLanguage.controls['nameFile'].pristine && formLanguage.controls['name'].value.length > 0" [@collapse]>Default
-      value will be used: {{formLanguage.controls['name'].value}}.json</div>
+    <input type="text" formControlName="fileName" placeholder="File's name (eg: en)" autocomplete="off">
+    <div *ngIf="((formLanguage.controls['fileName'].value?.length == 0 || formLanguage.controls['fileName'].value == null) && formLanguage.controls['name'].value?.length > 0) || formLanguage.controls['fileName'].value?.length > 0"
+      [@collapse]>
+      <div *ngIf="(formLanguage.controls['fileName'].value?.length == 0 || formLanguage.controls['fileName'].value == null) && formLanguage.controls['name'].value?.length > 0">
+        Default value will be used: {{formLanguage.controls['name'].value}}.json
+      </div>
+      <div *ngIf="formLanguage.controls['fileName'].value?.length > 0">
+        File's name: {{formLanguage.controls['fileName'].value}}.json
+      </div>
+    </div>
     <div>
       <button class="button row center-items" [disabled]="formLanguage.invalid">
         <i class="material-icons">add</i>
@@ -24,37 +47,51 @@
   </div>
 </form>
 
-<div id="wrapper-tabs" class="row overflow">
-  <div class="row inner-spacer center-items" [class.selected]="language == selectedLanguage" [class.clickable]="selectedLanguage != language"
-    *ngFor="let language of languages" (click)="selectedLanguage = language">
-    <div *ngIf="language != baseLanguage" class="status" [class.success]="language == baseLanguage || language.errorCount == 0"
-      [class.error]="language.errorCount > 0"></div>
-    <span>{{language.name}}</span>
-    <ng-container *ngIf="language == baseLanguage">*</ng-container>
+<div id="content" *ngIf="languages.length > 0">
+  <div id="wrapper-tabs" class="row overflow">
+    <div class="row inner-spacer center-items" [class.selected]="language == selectedLanguage" [class.clickable]="selectedLanguage != language"
+      *ngFor="let language of languages" (click)="selectedLanguage = language">
+      <div *ngIf="language != baseLanguage" class="status" [class.success]="language == baseLanguage || language.errorCount == 0"
+        [class.error]="language.errorCount > 0"></div>
+      <span>{{language.name}}</span>
+      <ng-container *ngIf="language == baseLanguage">*</ng-container>
+    </div>
+    <i class="material-icons clickable" *ngIf="showLanguageCreator == false" (click)="showLanguageCreator = true" [@collapse]>add</i>
   </div>
-  <i class="material-icons clickable" *ngIf="showLanguageCreator == false" (click)="showLanguageCreator = true" [@collapse]>add</i>
+
+  <div id="language" class="col inner-spacer" *ngIf="selectedLanguage != null">
+    <div>
+      <button class="icon" (click)="showLanguageSettings = !showLanguageSettings">
+        <i class="material-icons">settings</i>
+        <i class="material-icons">{{showLanguageSettings ? 'expand_less' : 'expand_more'}}</i>
+      </button>
+    </div>
+    <div *ngIf="showLanguageSettings" [@collapse]>
+      File: <input type="text" [(ngModel)]="selectedLanguage.fileName" placeholder="File's name">.json
+    </div>
+    <div class="row inner-spacer center-items">
+      <button class="outline row inner-spacer center-items" (click)="uploader.click()">
+        <i class="material-icons">open_in_browser</i>
+        <span>import json</span>
+      </button>
+      <button class="outline row inner-spacer center-items" (click)="exportLanguage(selectedLanguage)">
+        <i class="material-icons">save_alt</i>
+        <span>export json</span>
+      </button>
+      <button class="outline row inner-spacer center-items" (click)="deleteLanguage()">
+        <i class="material-icons">delete</i>
+        <span>delete language</span>
+      </button>
+      <button *ngIf="selectedLanguage != baseLanguage" class="outline row inner-spacer center-items" (click)="setBaseLanguage()">
+        <i class="material-icons">star</i>
+        <span>set as base language</span>
+      </button>
+    </div>
+    <app-kop [kop]="selectedLanguage.kop" [language]="selectedLanguage.name" [isBaseLanguage]="selectedLanguage == baseLanguage">Root</app-kop>
+    <!--
+    <pre>{{selectedLanguage.kop|json}}</pre>
+    -->
+  </div>
 </div>
 
-<div id="content" class="col inner-spacer">
-  <div class="row inner-spacer center-items">
-    <button class="outline row inner-spacer center-items" (click)="uploader.click()">
-      <span>import json</span>
-    </button>
-    <button class="outline row inner-spacer center-items" (click)="downloadJson()">
-      <span>download json</span>
-    </button>
-    <button class="outline row inner-spacer center-items" (click)="deleteLanguage()">
-      <i class="material-icons">delete</i>
-      <span>delete language</span>
-    </button>
-    <button *ngIf="selectedLanguage != baseLanguage" class="outline row inner-spacer center-items" (click)="setBaseLanguage()">
-      <i class="material-icons">star</i>
-      <span>set as base language</span>
-    </button>
-  </div>
-  <app-kop [kop]="selectedLanguage.kop" [language]="selectedLanguage.name" [isBaseLanguage]="selectedLanguage == baseLanguage">Root</app-kop>
-  <!--
-  <pre>{{selectedLanguage.kop|json}}</pre>
-  -->
-</div>
-<input #uploader type="file" (change)="onUpload($event)" hidden>
+<input #uploader type="file" (change)="onImportLanguage($event)" hidden>
