@@ -58,6 +58,7 @@ button {
   span {
     text-transform: capitalize;
     color: rgba($color: #000000, $alpha: .54);
+    white-space: nowrap;
   }
 }
 pre {
