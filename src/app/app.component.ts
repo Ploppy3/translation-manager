@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, EventEmitter, OnDestroy } from '@angular/core';
 import { collapse } from 'src/app/animations';
 import { en as englishData, en_complete as englishDataComplete, en_absurd as englishDataAbsurd, fr as frenchData } from 'src/app/languages';
 import { Lang, Project } from 'src/app/structure';
@@ -7,7 +7,7 @@ import { TranslationService } from 'src/app/translation.service';
 import { takeUntil } from 'rxjs/operators';
 import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import * as JSZip from 'jszip';
-import { downloadUrl, isArray, isNumber, copyToClipboard } from 'src/app/util';
+import { downloadUrl, isArray, isNumber } from 'src/app/util';
 
 @Component({
   selector: 'app-root',
@@ -37,24 +37,6 @@ export class AppComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    /*
-    let zip = new JSZip();
-    zip.file("hello.txt", "Hello\n");
-
-    var promise: Promise<Uint8Array> = null;
-    if (JSZip.support.uint8array) {
-      promise = zip.generateAsync({ type: "uint8array" });
-    } else { }
-    promise.then(data => {
-      let blob = new Blob([data], {
-        type: 'application/octet-stream'
-      });
-      let url = URL.createObjectURL(blob);
-      downloadUrl(url, 'test.zip');
-      URL.revokeObjectURL(url);
-    });
-    //*/
-    // ------------------------------
     this.translationService.fixLanguages$.pipe(
       takeUntil(this.ngOnDestroy$),
     ).subscribe(() => {
@@ -78,30 +60,6 @@ export class AppComponent implements OnInit, OnDestroy {
         }
       }
     });
-
-    /*
-    //-------------------------------
-
-    let kop_en = createKopFromObject(englishData);
-    let language_en: Lang = {
-      name: 'English',
-      kop: kop_en,
-    }
-    this.languages.push(language_en);
-    this.baseLanguage = language_en;
-    this.selectedLanguage = language_en;
-
-    //-------------------------------
-
-    let kop_fr = createKopFromObject(frenchData);
-    let language_fr: Lang = {
-      name: 'French',
-      kop: kop_fr,
-    }
-    this.languages.push(language_fr);
-
-    fixLanguage(this.baseLanguage, language_fr)
-    //*/
   }
 
   public createNewLanguage() {
@@ -139,7 +97,7 @@ export class AppComponent implements OnInit, OnDestroy {
     fixAllLanguages(this.baseLanguage, this.languages);
   }
 
-  public onImportLanguage(event: any) {
+  public importLanguage(event: any) {
     const file = event.target.files[0];
     const file_reader = new FileReader();
     file_reader.onload = (onLoad_event) => {
@@ -150,6 +108,7 @@ export class AppComponent implements OnInit, OnDestroy {
       } catch (error) { }
     };
     if (file != null) { file_reader.readAsText(file); }
+    event.target.value = null;
   }
 
   public exportLanguage(language: Lang) {
@@ -161,7 +120,7 @@ export class AppComponent implements OnInit, OnDestroy {
     URL.revokeObjectURL(url);
   }
 
-  public onImportProject(event) {
+  public importProject(event) {
     const file = event.target.files[0];
     const file_reader = new FileReader();
     file_reader.onload = (onLoad_event) => {
@@ -185,6 +144,7 @@ export class AppComponent implements OnInit, OnDestroy {
       }
     };
     if (file != null) { file_reader.readAsText(file); }
+    event.target.value = null;
   }
 
   public exportProject() {
@@ -223,29 +183,6 @@ export class AppComponent implements OnInit, OnDestroy {
       downloadUrl(url, 'languages.zip');
       URL.revokeObjectURL(url);
     });
-    /*
-    let zip = new JSZip();
-    zip.file("hello.txt", "Hello\n");
-
-    var promise: Promise<Uint8Array> = null;
-    if (JSZip.support.uint8array) {
-      promise = zip.generateAsync({ type: "uint8array" });
-    } else { }
-    promise.then(data => {
-      let blob = new Blob([data], {
-        type: 'application/octet-stream'
-      });
-      let url = URL.createObjectURL(blob);
-      downloadUrl(url, 'test.zip');
-      URL.revokeObjectURL(url);
-    });
-    //*/
-  }
-
-  public onChange(event) {
-    let text: string = event.target.innerText;
-    text = text.replace(/\r?\n|\r/g, '');
-    this.selectedLanguage.fileName = text;
   }
 
   ngOnDestroy(): void {

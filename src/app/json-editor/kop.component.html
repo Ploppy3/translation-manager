@@ -1,13 +1,17 @@
 <form #formDefineChild="ngForm" (ngSubmit)="addChild()" class="row inner-spacer center-items">
   <span>{{kop.key}}</span>
   <button class="icon" type="button" *ngIf="kop.key != 'root' && (isBaseLanguage || (kop.KVPs.length + kop.KOPs.length > 0))"
-    (click)="delete.next()"><i class="material-icons">delete</i></button>
+    (click)="delete.next()">
+    <i class="material-icons" matRipple>delete</i>
+  </button>
   <ng-container *ngIf="isBaseLanguage">
     <i class="material-icons secondary">chevron_right</i>
     <input #inputKopName class="grow" [(ngModel)]="model_formDefineChild.name" name="name" type="text" placeholder="Define new subcategory"
       autocomplete="off" required>
   </ng-container>
-  <button class="icon" *ngIf="isBaseLanguage && formDefineChild.valid"><i class="material-icons">add</i></button>
+  <button class="icon" *ngIf="isBaseLanguage && formDefineChild.valid" matRipple>
+    <i class="material-icons">add</i>
+  </button>
 </form>
 <div id="content">
 
@@ -15,7 +19,7 @@
     <input id="input-key" type="text" [(ngModel)]="model_formCreateKvp.key" name="key" placeholder="key" autocomplete="off" required>
     <input class="grow" type="text" [(ngModel)]="model_formCreateKvp.value" name="value" placeholder="value" autocomplete="off"
       required>
-    <button class="icon" *ngIf="formCreateKVP.valid">
+    <button class="icon" *ngIf="formCreateKVP.valid" matRipple>
       <i class="material-icons">add</i>
     </button>
   </form>
@@ -23,7 +27,7 @@
   <ng-container *ngIf="kop.missingKVPs.length > 0">
     <div class="row inner-spacer center-items error clickable" (click)="kop.showMissingKVPs = !kop.showMissingKVPs">
       <span>Missing: {{kop.missingKVPs.length}} translations</span>
-      <button class="icon">
+      <button class="icon" matRipple>
         <i class="material-icons">{{ kop.showMissingKVPs ? 'expand_less' : 'expand_more' }}</i>
       </button>
     </div>
@@ -36,7 +40,7 @@
   <ng-container *ngIf="kop.KVPs.length > 0">
     <div class="row inner-spacer center-items success clickable" (click)="kop.showKVPs = !kop.showKVPs">
       <span>{{ kop.showKVPs ? 'Hide' : 'Show' }} {{kop.KVPs.length}} translations</span>
-      <button class="icon">
+      <button class="icon" matRipple>
         <i class="material-icons">{{ kop.showKVPs ? 'expand_less' : 'expand_more' }}</i>
       </button>
     </div>
@@ -48,7 +52,9 @@
       <span class="mono primary">{{kvp.key}}</span>
       <input class="grow" type="text" [(ngModel)]="kvp.value" (ngModelChange)="translationService.markLanguageDirty$.next(language)"
         autocomplete="off">
-      <button class="icon" *ngIf="kvpElRef.showDeleteButton" (click)="dropKey(kvp)"><i class="material-icons">delete</i></button>
+      <button class="icon" *ngIf="kvpElRef.showDeleteButton" (click)="dropKey(kvp)" matRipple>
+        <i class="material-icons">delete</i>
+      </button>
     </div>
   </ng-container>
 

@@ -1,16 +1,16 @@
 <div class="half-padding-v">
   <div class="half-padding-v">
     <div id="wrapper-actions" class="row inner-spacer center-items overflow">
-      <button class="button row inner-spacer center-items" (click)="inputImportProject.click()">
+      <button class="button row center-items" (click)="inputImportProject.click()" matRipple>
         <i class="material-icons">open_in_browser</i>
         <span>import project</span>
-        <input #inputImportProject hidden type="file" (change)="onImportProject($event)">
+        <div class="mat-ripple-element"></div>
       </button>
-      <button class="button row inner-spacer center-items" *ngIf="languages.length > 0" (click)="exportProject()">
+      <button class="button row center-items" *ngIf="languages.length > 0" (click)="exportProject()" matRipple>
         <i class="material-icons">save_alt</i>
         <span>export project</span>
       </button>
-      <button class="button row inner-spacer center-items" *ngIf="languages.length > 1" (click)="exportLanguages()">
+      <button class="button row center-items" *ngIf="languages.length > 1" (click)="exportLanguages()" matRipple>
         <i class="material-icons">save_alt</i>
         <span>export languages</span>
       </button>
@@ -21,7 +21,7 @@
       [@collapse] (@collapse.done)="showLanguageCreator ? inputNameLanguage.focus() : null">
       <div class="row inner-spacer center-items">
         <div class="grow primary">Create Language</div>
-        <button type="button" class="icon" *ngIf="languages.length > 0" (click)="showLanguageCreator = false">
+        <button type="button" class="icon" *ngIf="languages.length > 0" (click)="showLanguageCreator = false" matRipple>
           <i class="material-icons">close</i>
         </button>
       </div>
@@ -46,7 +46,7 @@
           </div>
         </div>
         <div>
-          <button class="button row center-items" [disabled]="formLanguage.invalid">
+          <button class="button row center-items" [disabled]="formLanguage.invalid" matRipple>
             <i class="material-icons">add</i>
             <span>create new language</span>
           </button>
@@ -69,28 +69,34 @@
 
       <div id="language" class="col inner-spacer" *ngIf="selectedLanguage != null">
         <div>
-          <button class="icon" (click)="showLanguageSettings = !showLanguageSettings">
+          <button class="icon" (click)="showLanguageSettings = !showLanguageSettings" matRipple>
             <i class="material-icons">settings</i>
             <i class="material-icons">{{showLanguageSettings ? 'expand_less' : 'expand_more'}}</i>
           </button>
         </div>
+        <!--
         <div *ngIf="showLanguageSettings" [@collapse]>
           File: <span contenteditable="true" (input)="onChange($event)">{{selectedLanguage.fileName}}</span>.json
         </div>
+        -->
+        <div *ngIf="showLanguageSettings" [@collapse]>
+          File:
+          <app-content-editable [variable]="selectedLanguage.fileName" (change)="this.selectedLanguage.fileName = $event"></app-content-editable>.json
+        </div>
         <div class="row inner-spacer center-items overflow">
-          <button class="button row inner-spacer center-items" (click)="uploader.click()">
+          <button class="button row center-items" (click)="uploader.click()" matRipple>
             <i class="material-icons">open_in_browser</i>
             <span>import json</span>
           </button>
-          <button class="button row inner-spacer center-items" (click)="exportLanguage(selectedLanguage)">
+          <button class="button row center-items" (click)="exportLanguage(selectedLanguage)" matRipple>
             <i class="material-icons">save_alt</i>
             <span>export json</span>
           </button>
-          <button class="button row inner-spacer center-items" (click)="deleteLanguage()">
+          <button class="button row center-items" (click)="deleteLanguage()" matRipple>
             <i class="material-icons">delete</i>
             <span>delete language</span>
           </button>
-          <button *ngIf="selectedLanguage != baseLanguage" class="button row inner-spacer center-items" (click)="setBaseLanguage()">
+          <button class="button row center-items" *ngIf="selectedLanguage != baseLanguage" (click)="setBaseLanguage()" matRipple>
             <i class="material-icons">star</i>
             <span>set as base language</span>
           </button>
@@ -105,4 +111,5 @@
 </div>
 
 
-<input #uploader type="file" (change)="onImportLanguage($event)" hidden>
+<input #uploader type="file" (change)="importLanguage($event)" hidden>
+<input #inputImportProject type="file" (change)="importProject($event)" hidden>
