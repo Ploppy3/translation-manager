@@ -30,7 +30,7 @@
   </ng-container>
 
   <ng-container *ngIf="kop.showMissingKVPs">
-    <app-fix-missing-key *ngFor="let key of kop.missingKVPs; let i = index; trackBy: trackByMissingKvp" [missingKey]="key" (onFix)="onFix($event, i)"></app-fix-missing-key>
+    <app-fix-missing-key *ngFor="let key of kop.missingKVPs; let i = index; trackBy: trackByMissingKvp" [missingKey]="key" (fix)="onFix($event, i)"></app-fix-missing-key>
   </ng-container>
 
   <ng-container *ngIf="kop.KVPs.length > 0">

@@ -65,3 +65,11 @@
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
 }
+*[contenteditable="true"] {
+  line-height: 32px;
+  padding: 0 8px;
+  font-size: 1em;
+  border-radius: 4px;
+  color: rgba($color: #000000, $alpha: .87);
+  background-color: #CFD8DC;
+}

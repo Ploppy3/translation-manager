@@ -26,19 +26,23 @@
         </button>
       </div>
       <div class="col spacer">
-        <input #inputNameLanguage type="text" formControlName="name" placeholder="Name (eg: English)" autocomplete="off">
-        <ng-container *ngIf="formLanguage.controls['name'].errors != null">
-          <div class="error" *ngIf="formLanguage.controls['name'].errors['required']" [@collapse]>Required</div>
-          <div class="error" *ngIf="formLanguage.controls['name'].errors['forbiddenName']" [@collapse]>Exists already</div>
-        </ng-container>
-        <input type="text" formControlName="fileName" placeholder="File's name (eg: en)" autocomplete="off">
-        <div *ngIf="((formLanguage.controls['fileName'].value?.length == 0 || formLanguage.controls['fileName'].value == null) && formLanguage.controls['name'].value?.length > 0) || formLanguage.controls['fileName'].value?.length > 0"
-          [@collapse]>
-          <div *ngIf="(formLanguage.controls['fileName'].value?.length == 0 || formLanguage.controls['fileName'].value == null) && formLanguage.controls['name'].value?.length > 0">
-            Default value will be used: {{formLanguage.controls['name'].value}}.json
-          </div>
-          <div *ngIf="formLanguage.controls['fileName'].value?.length > 0">
-            File's name: {{formLanguage.controls['fileName'].value}}.json
+        <div>
+          <input #inputNameLanguage class="max-width" type="text" formControlName="name" placeholder="Name (eg: English)" autocomplete="off">
+          <ng-container *ngIf="formLanguage.controls['name'].errors != null">
+            <div class="error" *ngIf="formLanguage.controls['name'].errors['required']" [@collapse]>Required</div>
+            <div class="error" *ngIf="formLanguage.controls['name'].errors['forbiddenName']" [@collapse]>Exists already</div>
+          </ng-container>
+        </div>
+        <div>
+          <input class="max-width" type="text" formControlName="fileName" placeholder="File's name (eg: en)" autocomplete="off">
+          <div *ngIf="((formLanguage.controls['fileName'].value?.length == 0 || formLanguage.controls['fileName'].value == null) && formLanguage.controls['name'].value?.length > 0) || formLanguage.controls['fileName'].value?.length > 0"
+            [@collapse]>
+            <div class="secondary" *ngIf="(formLanguage.controls['fileName'].value?.length == 0 || formLanguage.controls['fileName'].value == null) && formLanguage.controls['name'].value?.length > 0">
+              Default value will be used: {{formLanguage.controls['name'].value}}.json
+            </div>
+            <div class="secondary" *ngIf="formLanguage.controls['fileName'].value?.length > 0">
+              File's name: {{formLanguage.controls['fileName'].value}}.json
+            </div>
           </div>
         </div>
         <div>
@@ -71,7 +75,7 @@
           </button>
         </div>
         <div *ngIf="showLanguageSettings" [@collapse]>
-          File: <input type="text" [(ngModel)]="selectedLanguage.fileName" placeholder="File's name">.json
+          File: <span contenteditable="true" (input)="onChange($event)">{{selectedLanguage.fileName}}</span>.json
         </div>
         <div class="row inner-spacer center-items overflow">
           <button class="button row inner-spacer center-items" (click)="uploader.click()">

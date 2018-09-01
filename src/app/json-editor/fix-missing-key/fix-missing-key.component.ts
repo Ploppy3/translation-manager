@@ -20,12 +20,12 @@ export class FixMissingKeyComponent implements OnInit {
   }
 
   @Output()
-  public onFix = new EventEmitter<{ key: string, value: string }>();
+  public fix = new EventEmitter<{ key: string, value: string }>();
 
   public model_formFixMissingKVP = {
     key: null,
     value: null,
-  }
+  };
 
   public focusInput() {
     this.inputValue.focus();

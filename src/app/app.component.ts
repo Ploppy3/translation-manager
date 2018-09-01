@@ -6,8 +6,8 @@ import { fixLanguage, kopToObject, fixAllLanguages, createKopFromObject, createK
 import { TranslationService } from 'src/app/translation.service';
 import { takeUntil } from 'rxjs/operators';
 import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
-import * as JSZip from "jszip";
-import { downloadUrl, isArray, isNumber } from 'src/app/util';
+import * as JSZip from 'jszip';
+import { downloadUrl, isArray, isNumber, copyToClipboard } from 'src/app/util';
 
 @Component({
   selector: 'app-root',
@@ -30,7 +30,7 @@ export class AppComponent implements OnInit, OnDestroy {
       forbiddenNamesValidator(this.languages),
     ]),
     fileName: new FormControl(null),
-  })
+  });
 
   constructor(
     private translationService: TranslationService,
@@ -54,21 +54,21 @@ export class AppComponent implements OnInit, OnDestroy {
       URL.revokeObjectURL(url);
     });
     //*/
-    //------------------------------
+    // ------------------------------
     this.translationService.fixLanguages$.pipe(
       takeUntil(this.ngOnDestroy$),
     ).subscribe(() => {
       fixAllLanguages(this.baseLanguage, this.languages);
-    })
+    });
     this.translationService.markLanguageDirty$.pipe(
       takeUntil(this.ngOnDestroy$),
     ).subscribe(nameDirtyLanguage => {
-      if (this.baseLanguage.name == nameDirtyLanguage) { // check everything if the dirty language is the fallBackLanguage
+      if (this.baseLanguage.name === nameDirtyLanguage) { // check everything if the dirty language is the fallBackLanguage
         fixAllLanguages(this.baseLanguage, this.languages);
       } else {
-        for (let language of this.languages) {
-          if (language.name == nameDirtyLanguage) {
-            if (this.baseLanguage == language) {
+        for (const language of this.languages) {
+          if (language.name === nameDirtyLanguage) {
+            if (this.baseLanguage === language) {
               fixAllLanguages(this.baseLanguage, this.languages);
             } else {
               fixLanguage(this.baseLanguage, language);
@@ -77,11 +77,11 @@ export class AppComponent implements OnInit, OnDestroy {
           }
         }
       }
-    })
+    });
 
     /*
     //-------------------------------
-    
+
     let kop_en = createKopFromObject(englishData);
     let language_en: Lang = {
       name: 'English',
@@ -105,17 +105,17 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   public createNewLanguage() {
-    let kop = createKopFromLanguage(this.baseLanguage);
-    let fileName = this.formLanguage.get('fileName').value;
-    let language: Lang = {
+    const kop = createKopFromLanguage(this.baseLanguage);
+    const fileName = this.formLanguage.get('fileName').value;
+    const language: Lang = {
       name: this.formLanguage.get('name').value,
       fileName: fileName || this.formLanguage.get('name').value,
       kop: kop,
-    }
+    };
     console.log(language);
     this.formLanguage.reset();
     this.languages.push(language);
-    if (this.languages.length == 1) { // set language to base language if it is the only language
+    if (this.languages.length === 1) { // set language to base language if it is the only language
       this.baseLanguage = language;
     }
     fixLanguage(this.baseLanguage, language);
@@ -125,9 +125,9 @@ export class AppComponent implements OnInit, OnDestroy {
   /**delete the selected language */
   public deleteLanguage() {
     this.languages.splice(this.languages.indexOf(this.selectedLanguage), 1);
-    if (this.selectedLanguage == this.baseLanguage) {
+    if (this.selectedLanguage === this.baseLanguage) {
       this.baseLanguage = null;
-      if (this.languages.length == 1) {
+      if (this.languages.length === 1) {
         this.baseLanguage = this.languages[0];
       }
     }
@@ -135,39 +135,39 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public setBaseLanguage() {
     this.baseLanguage = this.selectedLanguage;
-    //fixLanguage(this.baseLanguage, this.selectedLanguage);
+    // fixLanguage(this.baseLanguage, this.selectedLanguage);
     fixAllLanguages(this.baseLanguage, this.languages);
   }
 
   public onImportLanguage(event: any) {
-    let file = event.target.files[0]
-    let file_reader = new FileReader();
-    file_reader.onload = (event) => {
-      //console.log('res', event.target['result']);
+    const file = event.target.files[0];
+    const file_reader = new FileReader();
+    file_reader.onload = (onLoad_event) => {
+      // console.log('res', event.target['result']);
       try {
-        this.selectedLanguage.kop = createKopFromObject(JSON.parse(event.target['result']));
+        this.selectedLanguage.kop = createKopFromObject(JSON.parse(onLoad_event.target['result']));
         fixAllLanguages(this.baseLanguage, this.languages);
       } catch (error) { }
-    }
-    if (file != null) file_reader.readAsText(file);
+    };
+    if (file != null) { file_reader.readAsText(file); }
   }
 
   public exportLanguage(language: Lang) {
-    let obj = kopToObject(language.kop);
-    let json = JSON.stringify(obj);
-    let blob = new Blob([json], { type: 'application/json' });
-    let url = URL.createObjectURL(blob);
-    downloadUrl(url, 'project.json');
+    const obj = kopToObject(language.kop);
+    const json = JSON.stringify(obj);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    downloadUrl(url, this.selectedLanguage.fileName + '.json');
     URL.revokeObjectURL(url);
   }
 
   public onImportProject(event) {
-    let file = event.target.files[0]
-    let file_reader = new FileReader();
-    file_reader.onload = (event) => {
+    const file = event.target.files[0];
+    const file_reader = new FileReader();
+    file_reader.onload = (onLoad_event) => {
       try {
-        let obj: Project = JSON.parse(event.target['result']);
-        if (obj.version == 1) {
+        const obj: Project = JSON.parse(onLoad_event.target['result']);
+        if (obj.version === 1) {
           if (isArray(obj.languages)) {
             this.baseLanguage = null;
             this.languages = obj.languages;
@@ -183,8 +183,8 @@ export class AppComponent implements OnInit, OnDestroy {
       } catch (error) {
         console.warn(error);
       }
-    }
-    if (file != null) file_reader.readAsText(file);
+    };
+    if (file != null) { file_reader.readAsText(file); }
   }
 
   public exportProject() {
@@ -192,34 +192,34 @@ export class AppComponent implements OnInit, OnDestroy {
     if (this.baseLanguage) {
       baseLanguageId = this.languages.indexOf(this.baseLanguage);
     }
-    let project: Project = {
+    const project: Project = {
       version: 1,
       languages: this.languages,
       baseLanguageId: baseLanguageId,
-    }
-    let json = JSON.stringify(project);
-    let blob = new Blob([json], { type: 'application/json' });
-    let url = URL.createObjectURL(blob);
+    };
+    const json = JSON.stringify(project);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
     downloadUrl(url, 'project.json');
     URL.revokeObjectURL(url);
   }
 
   public exportLanguages() {
-    let zip = new JSZip();
+    const zip = new JSZip();
     this.languages.forEach(language => {
-      let obj = kopToObject(language.kop);
-      let json = JSON.stringify(obj);
+      const obj = kopToObject(language.kop);
+      const json = JSON.stringify(obj);
       zip.file(language.fileName + '.json', json);
     });
-    var promise: Promise<Uint8Array> = null;
+    let promise: Promise<Uint8Array> = null;
     if (JSZip.support.uint8array) {
-      promise = zip.generateAsync({ type: "uint8array" });
+      promise = zip.generateAsync({ type: 'uint8array' });
     } else { }
     promise.then(data => {
-      let blob = new Blob([data], {
+      const blob = new Blob([data], {
         type: 'application/octet-stream'
       });
-      let url = URL.createObjectURL(blob);
+      const url = URL.createObjectURL(blob);
       downloadUrl(url, 'languages.zip');
       URL.revokeObjectURL(url);
     });
@@ -242,6 +242,12 @@ export class AppComponent implements OnInit, OnDestroy {
     //*/
   }
 
+  public onChange(event) {
+    let text: string = event.target.innerText;
+    text = text.replace(/\r?\n|\r/g, '');
+    this.selectedLanguage.fileName = text;
+  }
+
   ngOnDestroy(): void {
     this.ngOnDestroy$.next();
   }
@@ -250,8 +256,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
 function forbiddenNamesValidator(forbiddenLanguages: Lang[]): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
-    for (let language of forbiddenLanguages) {
-      if (language.name == control.value) {
+    for (const language of forbiddenLanguages) {
+      if (language.name === control.value) {
         return { 'forbiddenName': { value: null } };
       }
     }

@@ -26,13 +26,13 @@ export class JsonEditorComponent implements OnInit {
   public model_formCreateKvp = {
     key: null,
     value: null,
-  }
+  };
   public model_formFixMissingKVP = {
     value: null,
-  }
+  };
   public model_formDefineChild = {
     name: null,
-  }
+  };
 
   constructor(
     public translationService: TranslationService,
@@ -46,7 +46,7 @@ export class JsonEditorComponent implements OnInit {
   }
 
   public onFix(kvp: { key: string, value: string }, id: number) {
-    let submited = this.tryCreateKVP(kvp.key, kvp.value);
+    const submited = this.tryCreateKVP(kvp.key, kvp.value);
     if (submited && this.fixMissingKeyComponents.toArray().length > id + 1) {
       this.fixMissingKeyComponents.toArray()[id + 1].focusInput();
     }
@@ -54,8 +54,8 @@ export class JsonEditorComponent implements OnInit {
 
   public tryCreateKVP(key: string, value: string): boolean {
     let foundKey = false;
-    for (let kvp of this.kop.KVPs) {
-      if (kvp.key == key) {
+    for (const kvp of this.kop.KVPs) {
+      if (kvp.key === key) {
         foundKey = true;
         break;
       }
@@ -72,7 +72,7 @@ export class JsonEditorComponent implements OnInit {
   public addChild() {
     let alreadyExist = false;
     for (const kop of this.kop.KOPs) {
-      if (kop.key == this.model_formDefineChild.name) {
+      if (kop.key === this.model_formDefineChild.name) {
         alreadyExist = true;
         break;
       }
@@ -83,16 +83,16 @@ export class JsonEditorComponent implements OnInit {
         KOPs: [],
         KVPs: [],
         missingKVPs: [],
-      })
+      });
       this.model_formDefineChild.name = null;
       this.translationService.markLanguageDirty$.next(this.language);
     }
   }
 
   public dropKey(kvp: LangKVP) {
-    //console.log('trying to drop key', kvp);
+    // console.log('trying to drop key', kvp);
 
-    let pos = this.kop.KVPs.indexOf(kvp)
+    const pos = this.kop.KVPs.indexOf(kvp);
     if (pos > -1) {
       this.kop.KVPs.splice(pos, 1);
       this.translationService.markLanguageDirty$.next(this.language);
@@ -100,10 +100,10 @@ export class JsonEditorComponent implements OnInit {
   }
 
   public dropKop(kop: LangKOP) {
-    let pos: number = -1;
+    let pos = -1;
     for (let i = 0; i < this.kop.KOPs.length; i++) {
       const _kop = this.kop.KOPs[i];
-      if (_kop == kop) {
+      if (_kop === kop) {
         pos = i;
         break;
       }
