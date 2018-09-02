@@ -1,4 +1,4 @@
-import { trigger, state, transition, style, animate, query, group } from "@angular/animations";
+import { trigger, state, transition, style, animate, query, group } from '@angular/animations';
 
 export const collapse = trigger('collapse', [
   transition(':enter', [
