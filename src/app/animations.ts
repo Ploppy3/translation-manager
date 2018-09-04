@@ -12,3 +12,19 @@ export const collapse = trigger('collapse', [
   ]),
   transition('collapsed <=> expanded', animate('500ms ease-in-out')),
 ]);
+
+export const fade = trigger('fade', [
+  transition(':enter', [
+    style({
+      opacity: 0,
+    }),
+    animate('.5s ease', style({
+      opacity: 1,
+    }))
+  ]),
+  transition(':leave', [
+    animate('.5s ease', style({
+      opacity: 0,
+    }))
+  ]),
+]);

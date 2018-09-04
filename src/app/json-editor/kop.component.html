@@ -1,11 +1,11 @@
 <form #formDefineChild="ngForm" (ngSubmit)="addChild()" class="row inner-spacer center-items">
   <span>{{kop.key}}</span>
-  <button class="icon" type="button" *ngIf="kop.key != 'root' && (isBaseLanguage || (kop.KVPs.length + kop.KOPs.length > 0))"
-    (click)="delete.next()">
-    <i class="material-icons" matRipple>delete</i>
+  <button type="button" class="icon" *ngIf="kop.key != 'root' && (isBaseLanguage || (kop.KVPs.length + kop.KOPs.length > 0))"
+    (click)="delete.next()" matRipple>
+    <i class="material-icons">delete</i>
   </button>
   <ng-container *ngIf="isBaseLanguage">
-    <i class="material-icons secondary">chevron_right</i>
+    <i class="material-icons secondary-text">chevron_right</i>
     <input #inputKopName class="grow" [(ngModel)]="model_formDefineChild.name" name="name" type="text" placeholder="Define new subcategory"
       autocomplete="off" required>
   </ng-container>

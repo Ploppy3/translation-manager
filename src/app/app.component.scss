@@ -37,6 +37,7 @@
   color: #fff;
   >* {
     padding: 8px;
+    transition: background-color .25s ease, color .25s ease;
   }
   >*.selected {
     color: $primary;

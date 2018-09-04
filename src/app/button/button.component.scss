@@ -1,0 +1,24 @@
+@import '../../variables';
+button {
+  cursor: pointer;
+  font-size: 1em;
+  background-color: transparent;
+  border: none;
+  border-radius: 8px;
+  padding: 0 8px;
+  min-height: 34px;
+  color: rgba($color: #000000, $alpha: .87);
+  background-color: $accent;
+  transition: background-color .25s ease, color .25s ease;
+  &[disabled] {
+    cursor: default;
+    color: rgba($color: #fff, $alpha: .75);
+    background-color: #455A64;
+    span {
+      color: rgba($color: #fff, $alpha: .75);
+    }
+  }
+  i {
+    transition: color .25s ease;
+  }
+}

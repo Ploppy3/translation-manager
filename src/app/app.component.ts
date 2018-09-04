@@ -1,5 +1,5 @@
-import { Component, OnInit, EventEmitter, OnDestroy } from '@angular/core';
-import { collapse } from 'src/app/animations';
+import { Component, OnInit, EventEmitter, OnDestroy, AfterViewInit } from '@angular/core';
+import { collapse, fade } from 'src/app/animations';
 import { en as englishData, en_complete as englishDataComplete, en_absurd as englishDataAbsurd, fr as frenchData } from 'src/app/languages';
 import { Lang, Project } from 'src/app/structure';
 import { fixLanguage, kopToObject, fixAllLanguages, createKopFromObject, createKopFromLanguage } from 'src/app/translation-manager';
@@ -8,12 +8,38 @@ import { takeUntil } from 'rxjs/operators';
 import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import * as JSZip from 'jszip';
 import { downloadUrl, isArray, isNumber } from 'src/app/util';
+import { trigger, transition, style, animate } from '@angular/animations';
+import { SnackbarService } from 'src/app/snackbar.service';
+import { MatSnackBar } from '@angular/material';
+import { SwUpdate } from '@angular/service-worker';
+import { UpdateComponent } from 'src/app/update/update.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  animations: [collapse]
+  animations: [
+    collapse,
+    fade,
+    trigger('revealSlideVertical', [
+      transition(':enter', [
+        style({
+          opacity: 0,
+          transform: 'translate3d(0, 50px, 0)',
+        }),
+        animate('.5s ease', style({
+          opacity: 1,
+          transform: 'translate3d(0,0,0)',
+        })),
+      ]),
+      transition(':leave', [
+        animate('.5s ease', style({
+          opacity: 0,
+          transform: 'translate3d(0,50px, 0)',
+        })),
+      ]),
+    ])
+  ]
 })
 export class AppComponent implements OnInit, OnDestroy {
 
@@ -34,9 +60,25 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(
     private translationService: TranslationService,
+    private snackbarService: SnackbarService,
+    private snackbar: MatSnackBar,
+    private update: SwUpdate,
   ) { }
 
   ngOnInit() {
+    // --------------------------------------------------------------
+    this.update.available.subscribe(event => {
+      console.log('available', event.available, 'current', event.current);
+      this.snackbar.openFromComponent(UpdateComponent);
+    });
+    this.update.activated.subscribe(event => {
+      console.log('current', event.current, 'previous', event.previous);
+    });
+    // --------------------------------------------------------------
+    this.snackbarService.snackbarString$.subscribe(message => {
+      this.snackbar.open(message, null, { duration: 2000 });
+    });
+    // --------------------------------------------------------------
     this.translationService.fixLanguages$.pipe(
       takeUntil(this.ngOnDestroy$),
     ).subscribe(() => {
@@ -89,6 +131,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.baseLanguage = this.languages[0];
       }
     }
+    this.selectedLanguage = this.languages[0];
   }
 
   public setBaseLanguage() {
@@ -120,7 +163,14 @@ export class AppComponent implements OnInit, OnDestroy {
     URL.revokeObjectURL(url);
   }
 
+  public closeProject() {
+    this.baseLanguage = null;
+    this.languages = [];
+    this.selectedLanguage = null;
+  }
+
   public importProject(event) {
+    this.closeProject();
     const file = event.target.files[0];
     const file_reader = new FileReader();
     file_reader.onload = (onLoad_event) => {
@@ -128,7 +178,6 @@ export class AppComponent implements OnInit, OnDestroy {
         const obj: Project = JSON.parse(onLoad_event.target['result']);
         if (obj.version === 1) {
           if (isArray(obj.languages)) {
-            this.baseLanguage = null;
             this.languages = obj.languages;
             if (this.languages.length > 0) {
               this.selectedLanguage = this.languages[0];
@@ -141,6 +190,7 @@ export class AppComponent implements OnInit, OnDestroy {
         }
       } catch (error) {
         console.warn(error);
+        this.snackbarService.showSnackbar('An error occured, could not open project');
       }
     };
     if (file != null) { file_reader.readAsText(file); }

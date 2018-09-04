@@ -26,30 +26,14 @@ input {
   font-size: 1em;
   border-radius: 4px;
   min-width: 150px;
-  /*
-  background-color: transparent;
-  border: 1px solid #ddd;
-  //*/
-  //*
   background-color: #CFD8DC;
-  border: none; //*/
+  border: none;
 }
 button {
   cursor: pointer;
   font-size: 1em;
   background-color: transparent;
   border: none;
-  &.button {
-    border-radius: 8px;
-    padding: 0 8px;
-    min-height: 34px;
-    /*
-    color: $accent;
-    border: 1px solid $accent;
-    //*/
-    color: rgba($color: #000000, $alpha: .87);
-    background-color: $accent;
-  }
   &.icon {
     padding: 4px;
     border-radius: 16px; //color: $accent;
@@ -69,10 +53,13 @@ pre {
   overflow: auto;
 }
 .primary-text {
-  color: #fff;
+  color: $color-text-disabled;
 }
-.secondary {
-  color: rgba($color: #fff, $alpha: .75);
+.secondary-text {
+  color: $color-text-secondary;
+}
+.disabled-text {
+  color: $color-text-disabled;
 }
 .primary {
   color: $primary;

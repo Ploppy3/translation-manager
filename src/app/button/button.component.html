@@ -1,0 +1,5 @@
+<button [type]="isSubmit ? 'submit' : 'button'" class="row center-items" (click)="click()" [disabled]="disabled" matRipple
+  [matRippleDisabled]="disabled">
+  <i *ngIf="icon !== null" class="material-icons">{{icon}}</i>
+  <span><ng-content></ng-content></span>
+</button>
