@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-button',
@@ -11,16 +11,18 @@ export class ButtonComponent implements OnInit {
   @Input() text: string;
   @Input() disabled = false;
   @Input() isSubmit = false;
-  @Output() clicked = new EventEmitter<void>();
+  @Output() clicked = new EventEmitter<MouseEvent>();
 
-  constructor() { }
+  constructor(
+    public elementRef: ElementRef,
+  ) { }
 
   ngOnInit() {
   }
 
-  public click() {
+  public click(event: MouseEvent) {
     if (!this.disabled) {
-      this.clicked.next();
+      this.clicked.next(event);
     }
   }
 
