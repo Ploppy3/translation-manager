@@ -12,6 +12,7 @@ import { ButtonComponent } from './button/button.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { UpdateComponent } from './update/update.component';
+import { TranslatorComponent } from './translator/translator.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { UpdateComponent } from './update/update.component';
     ContentEditableComponent,
     ButtonComponent,
     UpdateComponent,
+    TranslatorComponent,
   ],
   imports: [
     BrowserModule,

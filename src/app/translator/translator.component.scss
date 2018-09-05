@@ -1,0 +1,65 @@
+@import '~src/variables';
+:host {
+  display: block;
+}
+.status {
+  border-radius: 4px;
+  height: 8px;
+  width: 8px;
+  &.error {
+    background-color: $error;
+  }
+  &.success {
+    background-color: $success;
+  }
+}
+#wrapper-actions {
+  padding: 0 8px;
+}
+#language-creator {
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #546E7A;
+  &>*:first-child {
+    padding: 8px;
+    border-bottom: 1px solid rgba(#fff, .24);
+  }
+  &>*:last-child {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}
+#wrapper-tabs {
+  line-height: 24px;
+  color: #fff;
+  >* {
+    padding: 8px;
+    transition: background-color .25s ease, color .25s ease;
+  }
+  >*.selected {
+    color: $primary;
+    background-color: #546E7A;
+    border-bottom: none;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+  .state {
+    background-color: #9E9E9E;
+    width: 8px;
+    height: 8px;
+    border-radius: 8px;
+    &.ok {
+      background-color: $success,
+    }
+    &.error {
+      background-color: $error,
+    }
+  }
+}
+#language {
+  padding: 8px;
+  margin-bottom: 32px;
+  background-color: #546E7A;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
