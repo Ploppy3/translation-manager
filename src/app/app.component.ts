@@ -170,12 +170,12 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   public importProject(event) {
-    this.closeProject();
     const file = event.target.files[0];
     const file_reader = new FileReader();
     file_reader.onload = (onLoad_event) => {
       try {
         const obj: Project = JSON.parse(onLoad_event.target['result']);
+        this.closeProject();
         if (obj.version === 1) {
           if (isArray(obj.languages)) {
             this.languages = obj.languages;
