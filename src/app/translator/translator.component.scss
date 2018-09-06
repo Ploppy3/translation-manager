@@ -35,13 +35,13 @@
   >* {
     padding: 8px;
     transition: background-color .25s ease, color .25s ease;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
   }
   >*.selected {
     color: $primary;
     background-color: #546E7A;
     border-bottom: none;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
   }
   .state {
     background-color: #9E9E9E;
