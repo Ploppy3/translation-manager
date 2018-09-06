@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, EventEmitter, OnDestroy, ElementRef } from '@angular/core';
 import { collapse, fade } from 'src/app/animations';
 import { en as englishData, en_complete as englishDataComplete, en_absurd as englishDataAbsurd, fr as frenchData } from 'src/app/languages';
 import { Lang, Project } from 'src/app/structure';
@@ -11,6 +11,11 @@ import { downloadUrl, isArray, isNumber } from 'src/app/util';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { SnackbarService } from 'src/app/snackbar.service';
 import { environment } from 'src/environments/environment';
+import { Overlay, GlobalPositionStrategy } from '@angular/cdk/overlay';
+import { ComponentPortal } from '@angular/cdk/portal';
+import { ConfirmDialogComponent } from 'src/app/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogService } from 'src/app/confirm-dialog.service';
+import { ButtonComponent } from 'src/app/button/button.component';
 
 @Component({
   selector: 'app-translator',
@@ -60,6 +65,7 @@ export class TranslatorComponent implements OnInit, OnDestroy {
   constructor(
     private translationService: TranslationService,
     private snackbarService: SnackbarService,
+    private confirmDialogService: ConfirmDialogService,
   ) { }
 
   ngOnInit() {
@@ -88,7 +94,9 @@ export class TranslatorComponent implements OnInit, OnDestroy {
     });
   }
 
-  public test() {
+  public test(mouseEvent: MouseEvent) {
+    console.log(mouseEvent);
+    const dialogRef = this.confirmDialogService.open(mouseEvent);
   }
 
   public createNewLanguage() {

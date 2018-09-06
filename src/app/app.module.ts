@@ -13,6 +13,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { UpdateComponent } from './update/update.component';
 import { TranslatorComponent } from './translator/translator.component';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,7 @@ import { TranslatorComponent } from './translator/translator.component';
     ButtonComponent,
     UpdateComponent,
     TranslatorComponent,
+    ConfirmDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,10 +33,11 @@ import { TranslatorComponent } from './translator/translator.component';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     MaterialModule,
+    OverlayModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [UpdateComponent]
+  entryComponents: [UpdateComponent, ConfirmDialogComponent]
 })
 export class AppModule { }

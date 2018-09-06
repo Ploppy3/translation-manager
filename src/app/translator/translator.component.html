@@ -5,10 +5,11 @@
       <app-button icon="save_alt" (clicked)="exportLanguages()" [disabled]="languages.length === 0">export languages</app-button>
       <app-button icon="save_alt" (clicked)="exportProject()" [disabled]="languages.length === 0">export project</app-button>
       <app-button icon="close" (clicked)="closeProject()" [disabled]="languages.length === 0">close project</app-button>
-      <app-button *ngIf="!environment.production" icon="bug_report" (click)="test()">test</app-button>
+      <app-button #button *ngIf="!environment.production" icon="bug_report" (click)="test($event)">tetestst</app-button>
     </div>
   </div>
-  <div class="half-padding-v" *ngIf="showLanguageCreator === true || languages.length === 0" [@collapse] (@collapse.done)="showLanguageCreator ? inputNameLanguage.focus() : null">
+  <div class="half-padding-v" *ngIf="showLanguageCreator === true || languages.length === 0" [@collapse]
+    (@collapse.done)="showLanguageCreator ? inputNameLanguage.focus() : null">
     <form id="language-creator" [formGroup]="formLanguage" (ngSubmit)="createNewLanguage()">
       <div class="row inner-spacer center-items">
         <div class="grow primary">Create Language</div>
@@ -18,14 +19,16 @@
       </div>
       <div class="col spacer">
         <div>
-          <input #inputNameLanguage class="max-width" type="text" formControlName="name" placeholder="Name (eg: English)" autocomplete="off">
+          <input #inputNameLanguage class="max-width" type="text" formControlName="name" placeholder="Name (eg: English)"
+            autocomplete="off">
           <ng-container *ngIf="formLanguage.controls['name'].errors != null">
             <div class="error" *ngIf="formLanguage.controls['name'].errors['required']" [@collapse]>Required</div>
             <div class="error" *ngIf="formLanguage.controls['name'].errors['forbiddenName']" [@collapse]>Exists already</div>
           </ng-container>
         </div>
         <div>
-          <input class="max-width" type="text" formControlName="fileName" placeholder="File's name (eg: en)" autocomplete="off">
+          <input class="max-width" type="text" formControlName="fileName" placeholder="File's name (eg: en)"
+            autocomplete="off">
           <div *ngIf="((formLanguage.controls['fileName'].value?.length === 0 || formLanguage.controls['fileName'].value == null) && formLanguage.controls['name'].value?.length > 0) || formLanguage.controls['fileName'].value?.length > 0"
             [@collapse]>
             <div class="secondary-text" *ngIf="(formLanguage.controls['fileName'].value?.length === 0 || formLanguage.controls['fileName'].value == null) && formLanguage.controls['name'].value?.length > 0">
@@ -51,7 +54,8 @@
         <span>{{language.name}}</span>
         <ng-container *ngIf="language == baseLanguage">*</ng-container>
       </div>
-      <i class="material-icons clickable" *ngIf="showLanguageCreator == false" (click)="showLanguageCreator = true" [@fade]>add</i>
+      <i class="material-icons clickable" *ngIf="showLanguageCreator == false" (click)="showLanguageCreator = true"
+        [@fade]>add</i>
     </div>
 
     <div id="language" class="col inner-spacer" *ngIf="selectedLanguage != null">
@@ -74,7 +78,8 @@
         <app-button icon="open_in_browser" (clicked)="uploader.click()">import JSON</app-button>
         <app-button icon="save_alt" (clicked)="exportLanguage(selectedLanguage)">export JSON</app-button>
         <app-button icon="delete" (clicked)="deleteLanguage()">delete language</app-button>
-        <app-button *ngIf="selectedLanguage != baseLanguage" icon="star" (clicked)="setBaseLanguage()">set as base language</app-button>
+        <app-button *ngIf="selectedLanguage != baseLanguage" icon="star" (clicked)="setBaseLanguage()">set as base
+          language</app-button>
       </div>
       <app-kop class="overflow" [kop]="selectedLanguage.kop" [language]="selectedLanguage.name" [isBaseLanguage]="selectedLanguage == baseLanguage">Root</app-kop>
       <!--
