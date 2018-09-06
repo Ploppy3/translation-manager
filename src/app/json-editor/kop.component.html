@@ -11,7 +11,7 @@
     </button>
     <ng-container *ngIf="showCategoryCreator">
       <input #inputKopName class="grow" [(ngModel)]="model_formDefineChild.name" name="name" type="text" placeholder="Define new subcategory"
-        autocomplete="off" @fade required>
+        autocomplete="off" @fade (@fade.done)="showCategoryCreator ? inputKopName.focus() : null " required>
       <button class="icon" *ngIf="isBaseLanguage && formDefineChild.valid" matRipple>
         <i class="material-icons">add</i>
       </button>
