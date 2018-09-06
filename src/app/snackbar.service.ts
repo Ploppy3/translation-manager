@@ -11,7 +11,7 @@ export class SnackbarService {
 
   constructor() { }
 
-  public showSnackbar(message: string) {
+  public showMessage(message: string) {
     this._snackbarString$.next(message);
   }
 }

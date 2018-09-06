@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, OnDestroy, ElementRef } from '@angular/core';
+import { Component, OnInit, EventEmitter, OnDestroy } from '@angular/core';
 import { collapse, fade } from 'src/app/animations';
 import { en as englishData, en_complete as englishDataComplete, en_absurd as englishDataAbsurd, fr as frenchData } from 'src/app/languages';
 import { Lang, Project } from 'src/app/structure';
@@ -185,7 +185,7 @@ export class TranslatorComponent implements OnInit, OnDestroy {
         }
       } catch (error) {
         console.warn(error);
-        this.snackbarService.showSnackbar('An error occured, could not open project');
+        this.snackbarService.showMessage('An error occured, could not open project');
       }
     };
     if (file != null) { file_reader.readAsText(file); }
