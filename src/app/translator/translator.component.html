@@ -66,10 +66,10 @@
         </button>
       </div>
       <!--
-        <div *ngIf="showLanguageSettings" [@collapse]>
-          File: <span contenteditable="true" (input)="onChange($event)">{{selectedLanguage.fileName}}</span>.json
-        </div>
-        -->
+      <div *ngIf="showLanguageSettings" [@collapse]>
+        File: <span contenteditable="true" (input)="onChange($event)">{{selectedLanguage.fileName}}</span>.json
+      </div>
+      -->
       <div *ngIf="showLanguageSettings" [@collapse]>
         File:
         <app-content-editable [variable]="selectedLanguage.fileName" (change)="this.selectedLanguage.fileName = $event"></app-content-editable>.json
@@ -78,13 +78,14 @@
         <app-button icon="open_in_browser" (clicked)="uploader.click()">import JSON</app-button>
         <app-button icon="save_alt" (clicked)="exportLanguage(selectedLanguage)">export JSON</app-button>
         <app-button icon="delete" (clicked)="deleteLanguage()">delete language</app-button>
-        <app-button *ngIf="selectedLanguage != baseLanguage" icon="star" (clicked)="setBaseLanguage()">set as base
-          language</app-button>
+        <app-button *ngIf="selectedLanguage != baseLanguage" icon="star" (clicked)="setBaseLanguage()">
+          set as base language
+        </app-button>
       </div>
       <app-kop class="overflow" [kop]="selectedLanguage.kop" [language]="selectedLanguage.name" [isBaseLanguage]="selectedLanguage == baseLanguage">Root</app-kop>
       <!--
-          <pre>{{selectedLanguage.kop|json}}</pre>
-          -->
+      <pre>{{selectedLanguage.kop|json}}</pre>
+      -->
     </div>
   </div>
 </div>

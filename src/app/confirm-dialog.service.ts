@@ -31,7 +31,7 @@ export class ConfirmDialogService {
       dialogRef.close();
     });
     return componentRef.instance;
-    //*/
+    // */
   }
 
   private createInjector(customOverlayRef: CustomOverlayRef) {
