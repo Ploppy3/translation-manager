@@ -45,7 +45,7 @@
       </div>
     </form>
   </div>
-  <div class="half-padding-v" *ngIf="languages.length > 0" [@fade]>
+  <div class="half-padding-v" *ngIf="languages.length > 0" @fade>
     <div id="wrapper-tabs" class="row overflow">
       <div class="row inner-spacer center-items" [class.selected]="language == selectedLanguage" [class.clickable]="selectedLanguage != language"
         *ngFor="let language of languages" (click)="selectedLanguage = language">
@@ -55,7 +55,7 @@
         <ng-container *ngIf="language == baseLanguage">*</ng-container>
       </div>
       <i class="material-icons clickable" *ngIf="showLanguageCreator == false" (click)="showLanguageCreator = true"
-        [@fade]>add</i>
+        @fade>add</i>
     </div>
 
     <div id="language" class="col inner-spacer" *ngIf="selectedLanguage != null">
