@@ -2,11 +2,13 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewChildren, QueryList
 import { LangKOP, LangKVP } from 'src/app/structure';
 import { TranslationService } from 'src/app/translation.service';
 import { FixMissingKeyComponent } from 'src/app/json-editor/fix-missing-key/fix-missing-key.component';
+import { fade } from 'src/app/animations';
 
 @Component({
   selector: 'app-kop',
   templateUrl: './kop.component.html',
-  styleUrls: ['./kop.component.scss']
+  styleUrls: ['./kop.component.scss'],
+  animations: [fade],
 })
 export class JsonEditorComponent implements OnInit {
 
@@ -16,6 +18,8 @@ export class JsonEditorComponent implements OnInit {
   public isBaseLanguage: false;
   @Input('language')
   public language: 'string';
+
+  public showCategoryCreator = false;
 
   @Output()
   public delete = new EventEmitter<void>();
