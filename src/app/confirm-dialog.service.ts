@@ -2,6 +2,7 @@ import { Injectable, Injector } from '@angular/core';
 import { ComponentPortal, PortalInjector } from '@angular/cdk/portal';
 import { ConfirmDialogComponent } from 'src/app/confirm-dialog/confirm-dialog.component';
 import { Overlay, GlobalPositionStrategy, OverlayRef } from '@angular/cdk/overlay';
+import { LoggerService } from 'src/app/logger.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,10 @@ export class ConfirmDialogService {
   constructor(
     private overlay: Overlay,
     private injector: Injector,
-  ) { }
+    private logger: LoggerService,
+  ) {
+    this.logger.log(this, 'constructor');
+  }
 
   public open(mouseEvent: MouseEvent) {
     const positionStrategy = new GlobalPositionStrategy();

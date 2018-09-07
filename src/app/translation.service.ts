@@ -1,4 +1,5 @@
 import { Injectable, EventEmitter } from '@angular/core';
+import { LoggerService } from 'src/app/logger.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,5 +11,9 @@ export class TranslationService {
   public fixLanguages$ = new EventEmitter<void>();
   public markLanguageDirty$ = new EventEmitter<string>();
 
-  constructor() { }
+  constructor(
+    private logger: LoggerService,
+  ) {
+    this.logger.log(this, 'constructor');
+  }
 }

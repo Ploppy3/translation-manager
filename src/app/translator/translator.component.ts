@@ -16,6 +16,7 @@ import { ComponentPortal } from '@angular/cdk/portal';
 import { ConfirmDialogComponent } from 'src/app/confirm-dialog/confirm-dialog.component';
 import { ConfirmDialogService } from 'src/app/confirm-dialog.service';
 import { ButtonComponent } from 'src/app/button/button.component';
+import { LoggerService } from 'src/app/logger.service';
 
 @Component({
   selector: 'app-translator',
@@ -66,6 +67,7 @@ export class TranslatorComponent implements OnInit, OnDestroy {
     private translationService: TranslationService,
     private snackbarService: SnackbarService,
     private confirmDialogService: ConfirmDialogService,
+    private logger: LoggerService,
   ) { }
 
   ngOnInit() {
@@ -95,7 +97,7 @@ export class TranslatorComponent implements OnInit, OnDestroy {
   }
 
   public test(mouseEvent: MouseEvent) {
-    console.log(mouseEvent);
+    this.logger.log(this, mouseEvent);
     const dialogRef = this.confirmDialogService.open(mouseEvent);
   }
 
@@ -107,7 +109,7 @@ export class TranslatorComponent implements OnInit, OnDestroy {
       fileName: fileName || this.formLanguage.get('name').value,
       kop: kop,
     };
-    console.log(language);
+    this.logger.log(this, language);
     this.formLanguage.reset();
     this.languages.push(language);
     if (this.languages.length === 1) { // set language to base language if it is the only language
@@ -139,7 +141,6 @@ export class TranslatorComponent implements OnInit, OnDestroy {
     const file = event.target.files[0];
     const file_reader = new FileReader();
     file_reader.onload = (onLoad_event) => {
-      // console.log('res', event.target['result']);
       try {
         this.selectedLanguage.kop = createKopFromObject(JSON.parse(onLoad_event.target['result']));
         fixAllLanguages(this.baseLanguage, this.languages);

@@ -94,8 +94,6 @@ export class JsonEditorComponent implements OnInit {
   }
 
   public dropKey(kvp: LangKVP) {
-    // console.log('trying to drop key', kvp);
-
     const pos = this.kop.KVPs.indexOf(kvp);
     if (pos > -1) {
       this.kop.KVPs.splice(pos, 1);

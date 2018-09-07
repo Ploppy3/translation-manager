@@ -3,6 +3,7 @@ import { SnackbarService } from 'src/app/snackbar.service';
 import { MatSnackBar } from '@angular/material';
 import { SwUpdate } from '@angular/service-worker';
 import { UpdateComponent } from 'src/app/update/update.component';
+import { LoggerService } from 'src/app/logger.service';
 
 @Component({
   selector: 'app-root',
@@ -15,16 +16,17 @@ export class AppComponent implements OnInit {
     private snackbarService: SnackbarService,
     private snackbar: MatSnackBar,
     private update: SwUpdate,
+    private logger: LoggerService,
   ) { }
 
   ngOnInit() {
     // --------------------------------------------------------------
     this.update.available.subscribe(event => {
-      console.log('available', event.available, 'current', event.current);
+      this.logger.log(this, 'available', event.available, 'current', event.current);
       this.snackbar.openFromComponent(UpdateComponent);
     });
     this.update.activated.subscribe(event => {
-      console.log('current', event.current, 'previous', event.previous);
+      this.logger.log(this, 'current', event.current, 'previous', event.previous);
     });
     // --------------------------------------------------------------
     this.snackbarService.snackbarString$.subscribe(message => {

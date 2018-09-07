@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
 import { createViewChildren } from '@angular/compiler/src/core';
+import { LoggerService } from 'src/app/logger.service';
 
 @Component({
   selector: 'app-content-editable',
@@ -21,14 +22,16 @@ export class ContentEditableComponent implements OnInit {
     });
   }
 
-  constructor() { }
+  constructor(
+    private logger: LoggerService,
+  ) { }
 
   ngOnInit() {
     this.span = this._spanRef.nativeElement;
   }
 
   public onChange() {
-    console.log('change spotted');
+    this.logger.log(this, 'change spotted');
 
     this.change.next(this.span.textContent);
   }
