@@ -1,6 +1,16 @@
 :host {
   display: block;
 }
+.wrapper-kvp {
+  button.onHover {
+    display: none;
+  }
+  &:hover {
+    button.onHover {
+      display: block;
+    }
+  }
+}
 #content {
   padding-left: 16px;
   margin-left: 16px;

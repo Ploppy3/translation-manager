@@ -68,8 +68,7 @@
 
   <!--KVPs-->
   <ng-container *ngIf="kop.showKVPs">
-    <div #kvpElRef class="row inner-spacer center-items" (mouseenter)="kvpElRef.showDeleteButton = true" (mouseleave)="kvpElRef.showDeleteButton = false"
-      *ngFor="let kvp of kop.KVPs; trackBy: trackByKvp">
+    <div class="wrapper-kvp row inner-spacer center-items" *ngFor="let kvp of kop.KVPs; trackBy: trackByKvp">
       <div class="grow">
         <div class="row inner-spacer center-items">
           <span class="mono primary">{{kvp.key}}</span>
@@ -79,11 +78,19 @@
         <div class="grow row inner-spacer center-items" *ngIf="isBaseLanguage && kvp.context != null">
           <i class="grow material-icons secondary-text">subdirectory_arrow_right</i>
           <span class="secondary-text">Context:</span>
+          <button class="icon" (click)="dropObjectKey(kvp, 'context'); translationService.markLanguageDirty$.next(language)"
+            matRipple>
+            <i class="material-icons">cancel</i>
+          </button>
           <input class="input-edit-kvp-context max-width" type="text" [(ngModel)]="kvp.context" (ngModelChange)="translationService.markLanguageDirty$.next(language)"
             autocomplete="off">
         </div>
       </div>
-      <button class="icon" (click)="kvpSelectedForMenu = kvp" (click)="dropKey(kvp)" matRipple>
+      <button class="icon onHover" *ngIf="isBaseLanguage && kvp.context === undefined" (click)="kvp.context = ''; translationService.markLanguageDirty$.next(language)"
+        matRipple>
+        <i class="material-icons">add</i>
+      </button>
+      <button class="icon onHover" (click)="dropKey(kvp)" matRipple>
         <i class="material-icons">delete</i>
       </button>
     </div>

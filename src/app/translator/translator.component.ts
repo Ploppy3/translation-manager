@@ -45,6 +45,7 @@ import { LoggerService } from 'src/app/logger.service';
     ])
   ]
 })
+/**The base component, created in case a router is used in the future */
 export class TranslatorComponent implements OnInit, OnDestroy {
 
   public languages: Lang[] = [];

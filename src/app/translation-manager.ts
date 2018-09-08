@@ -130,7 +130,11 @@ function fixKOP(baseKop: LangKOP, kopToFix: LangKOP) {
     }
     if (!foundKey) {
       // console.log('missing key', kvp.key);
-      kopToFix.missingKVPs.push({ key: kvp.key, value: kvp.value });
+      const missingKvp: LangKVP = { key: kvp.key, value: kvp.value };
+      if (kvp.context != null) {
+        missingKvp.context = kvp.context;
+      }
+      kopToFix.missingKVPs.push(missingKvp);
     }
   });
   baseKop.KOPs.forEach(baseKop_child => {

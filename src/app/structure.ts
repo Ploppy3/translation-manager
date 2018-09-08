@@ -34,4 +34,5 @@ export interface LangKOP {
 export interface LangKVP {
   key: string;
   value: string;
+  context?: string;
 }

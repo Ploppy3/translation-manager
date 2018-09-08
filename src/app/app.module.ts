@@ -4,8 +4,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
-import { JsonEditorComponent } from 'src/app/json-editor/kop.component';
-import { FixMissingKeyComponent } from 'src/app/json-editor/fix-missing-key/fix-missing-key.component';
+import { KopEditorComponent } from 'src/app/kop-editor/kop.component';
+import { FixMissingKeyComponent } from 'src/app/kop-editor/fix-missing-key/fix-missing-key.component';
 import { MaterialModule } from './material/material.module';
 import { ContentEditableComponent } from './content-editable/content-editable.component';
 import { ButtonComponent } from './button/button.component';
@@ -19,7 +19,7 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
 @NgModule({
   declarations: [
     AppComponent,
-    JsonEditorComponent,
+    KopEditorComponent,
     FixMissingKeyComponent,
     ContentEditableComponent,
     ButtonComponent,

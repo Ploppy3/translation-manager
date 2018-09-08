@@ -75,8 +75,8 @@
         <app-content-editable [variable]="selectedLanguage.fileName" (change)="this.selectedLanguage.fileName = $event"></app-content-editable>.json
       </div>
       <div class="row inner-spacer center-items overflow">
-        <app-button icon="open_in_browser" (clicked)="uploader.click()">import JSON</app-button>
-        <app-button icon="save_alt" (clicked)="exportLanguage(selectedLanguage)">export JSON</app-button>
+        <app-button icon="open_in_browser" (clicked)="uploader.click()">import language</app-button>
+        <app-button icon="save_alt" (clicked)="exportLanguage(selectedLanguage)">export language</app-button>
         <app-button icon="delete" (clicked)="deleteLanguage()">delete language</app-button>
         <app-button *ngIf="selectedLanguage != baseLanguage" icon="star" (clicked)="setBaseLanguage()">
           set as base language
@@ -90,6 +90,5 @@
   </div>
 </div>
 
-
-<input #uploader type="file" (change)="importLanguage($event)" hidden>
-<input #inputImportProject type="file" (change)="importProject($event)" hidden>
+<input #uploader type="file" (change)="importLanguage($event)" accept=".json" hidden>
+<input #inputImportProject type="file" (change)="importProject($event)" accept=".json" hidden>

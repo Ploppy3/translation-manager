@@ -126,6 +126,10 @@ export class KopEditorComponent implements OnInit {
     }
   }
 
+  public dropObjectKey(obj: any, key: string) {
+    delete obj[key];
+  }
+
   public trackById(id, obj: any) {
     return obj;
   }
