@@ -13,10 +13,10 @@ export class FixMissingKeyComponent implements OnInit {
     this.inputValue = value.nativeElement;
   }
 
-  public missingKey: LangKVP;
-  @Input('missingKey') set setKey(value: LangKVP) {
+  public missingKvp: LangKVP;
+  @Input('missingKvp') set setKey(value: LangKVP) {
     this.model_formFixMissingKVP.key = value.key;
-    this.missingKey = value;
+    this.missingKvp = value;
   }
 
   @Output()

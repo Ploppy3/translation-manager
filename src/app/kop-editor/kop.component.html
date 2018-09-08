@@ -20,16 +20,27 @@
 </form>
 <div id="content">
 
-  <form #formCreateKVP="ngForm" (ngSubmit)="onFormCreateKvpSubmit()" *ngIf="isBaseLanguage" class="row inner-spacer center-items">
-    <input id="input-key" type="text" [(ngModel)]="model_formCreateKvp.key" name="key" placeholder="key" autocomplete="off"
-      required>
-    <input class="grow" type="text" [(ngModel)]="model_formCreateKvp.value" name="value" placeholder="value"
-      autocomplete="off" required>
+  <!--Form Create KVP-->
+  <form #formCreateKVP="ngForm" class="row inner-spacer center-items" (ngSubmit)="onSubmit_FormCreateKvp()" *ngIf="isBaseLanguage">
+    <div class="grow">
+      <div class="grow flex row inner-spacer">
+        <input id="input-key-kvp" type="text" [(ngModel)]="model_formCreateKvp.key" name="key" placeholder="key"
+          autocomplete="off" required>
+        <input class="grow" type="text" [(ngModel)]="model_formCreateKvp.value" name="value" placeholder="value"
+          autocomplete="off" required>
+      </div>
+      <input id="input-context-kvp" class="max-width" *ngIf="showKvpContextInput" type="text" [(ngModel)]="model_formCreateKvp.context"
+        name="context" placeholder="context" autocomplete="off">
+    </div>
+    <button type="button" class="icon" (click)="showKvpContextInput = !showKvpContextInput" matRipple>
+      <i class="material-icons">{{ showKvpContextInput ? 'unfold_less' : 'unfold_more' }}</i>
+    </button>
     <button class="icon" *ngIf="formCreateKVP.valid" matRipple>
       <i class="material-icons">add</i>
     </button>
   </form>
 
+  <!--Toggle Missing KVPs-->
   <ng-container *ngIf="kop.missingKVPs.length > 0">
     <div class="row inner-spacer center-items error clickable" (click)="kop.showMissingKVPs = !kop.showMissingKVPs">
       <span>Missing: {{kop.missingKVPs.length}} translations</span>
@@ -39,11 +50,13 @@
     </div>
   </ng-container>
 
+  <!--Forms Fix Missing KVPs-->
   <ng-container *ngIf="kop.showMissingKVPs">
-    <app-fix-missing-key *ngFor="let key of kop.missingKVPs; let i = index; trackBy: trackByMissingKvp" [missingKey]="key"
+    <app-fix-missing-key *ngFor="let key of kop.missingKVPs; let i = index; trackBy: trackByMissingKvp" [missingKvp]="key"
       (fix)="onFix($event, i)"></app-fix-missing-key>
   </ng-container>
 
+  <!--Toggle KVPs-->
   <ng-container *ngIf="kop.KVPs.length > 0">
     <div class="row inner-spacer center-items success clickable" (click)="kop.showKVPs = !kop.showKVPs">
       <span>{{ kop.showKVPs ? 'Hide' : 'Show' }} {{kop.KVPs.length}} translations</span>
@@ -53,18 +66,30 @@
     </div>
   </ng-container>
 
+  <!--KVPs-->
   <ng-container *ngIf="kop.showKVPs">
-    <div #kvpElRef (mouseenter)="kvpElRef.showDeleteButton = true" (mouseleave)="kvpElRef.showDeleteButton = false"
-      class="row inner-spacer center-items" *ngFor="let kvp of kop.KVPs; trackBy: trackByKvp">
-      <span class="mono primary">{{kvp.key}}</span>
-      <input class="grow" type="text" [(ngModel)]="kvp.value" (ngModelChange)="translationService.markLanguageDirty$.next(language)"
-        autocomplete="off">
-      <button class="icon" *ngIf="kvpElRef.showDeleteButton" (click)="dropKey(kvp)" matRipple>
+    <div #kvpElRef class="row inner-spacer center-items" (mouseenter)="kvpElRef.showDeleteButton = true" (mouseleave)="kvpElRef.showDeleteButton = false"
+      *ngFor="let kvp of kop.KVPs; trackBy: trackByKvp">
+      <div class="grow">
+        <div class="row inner-spacer center-items">
+          <span class="mono primary">{{kvp.key}}</span>
+          <input class="grow" type="text" [(ngModel)]="kvp.value" (ngModelChange)="translationService.markLanguageDirty$.next(language)"
+            autocomplete="off">
+        </div>
+        <div class="grow row inner-spacer center-items" *ngIf="isBaseLanguage && kvp.context != null">
+          <i class="grow material-icons secondary-text">subdirectory_arrow_right</i>
+          <span class="secondary-text">Context:</span>
+          <input class="input-edit-kvp-context max-width" type="text" [(ngModel)]="kvp.context" (ngModelChange)="translationService.markLanguageDirty$.next(language)"
+            autocomplete="off">
+        </div>
+      </div>
+      <button class="icon" (click)="kvpSelectedForMenu = kvp" (click)="dropKey(kvp)" matRipple>
         <i class="material-icons">delete</i>
       </button>
     </div>
   </ng-container>
 
+  <!--KOPs-->
   <app-kop *ngFor="let _kop of kop.KOPs; trackBy: trackByKop" [kop]="_kop" [language]="language" [isBaseLanguage]="isBaseLanguage"
     (delete)="dropKop(_kop)"></app-kop>
 

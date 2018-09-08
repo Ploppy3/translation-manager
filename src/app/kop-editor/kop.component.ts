@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChildren, QueryList } from '@angular/core';
 import { LangKOP, LangKVP } from 'src/app/structure';
 import { TranslationService } from 'src/app/translation.service';
-import { FixMissingKeyComponent } from 'src/app/json-editor/fix-missing-key/fix-missing-key.component';
+import { FixMissingKeyComponent } from 'src/app/kop-editor/fix-missing-key/fix-missing-key.component';
 import { fade } from 'src/app/animations';
 
 @Component({
@@ -10,7 +10,8 @@ import { fade } from 'src/app/animations';
   styleUrls: ['./kop.component.scss'],
   animations: [fade],
 })
-export class JsonEditorComponent implements OnInit {
+/**KOP stands for Key Object Pair, the base element of a translation */
+export class KopEditorComponent implements OnInit {
 
   @Input('kop')
   public kop: LangKOP;
@@ -19,6 +20,7 @@ export class JsonEditorComponent implements OnInit {
   @Input('language')
   public language: 'string';
 
+  public showKvpContextInput = false;
   public showCategoryCreator = false;
 
   @Output()
@@ -26,10 +28,10 @@ export class JsonEditorComponent implements OnInit {
 
   @ViewChildren(FixMissingKeyComponent) fixMissingKeyComponents: QueryList<FixMissingKeyComponent>;
 
-  public showKvpEditor = false;
   public model_formCreateKvp = {
     key: null,
     value: null,
+    context: null,
   };
   public model_formFixMissingKVP = {
     value: null,
@@ -45,18 +47,22 @@ export class JsonEditorComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public onFormCreateKvpSubmit() {
-    this.tryCreateKVP(this.model_formCreateKvp.key, this.model_formCreateKvp.value);
+  public onSubmit_FormCreateKvp() {
+    this.tryCreateKVP(this.model_formCreateKvp.key, this.model_formCreateKvp.value, this.model_formCreateKvp.context);
   }
 
   public onFix(kvp: { key: string, value: string }, id: number) {
     const submited = this.tryCreateKVP(kvp.key, kvp.value);
-    if (submited && this.fixMissingKeyComponents.toArray().length > id + 1) {
-      this.fixMissingKeyComponents.toArray()[id + 1].focusInput();
+    if (submited) {
+      if (this.fixMissingKeyComponents.toArray().length > id + 1) { // focus next input if is not last input
+        this.fixMissingKeyComponents.toArray()[id + 1].focusInput();
+      } else if (id > 0) {
+        this.fixMissingKeyComponents.toArray()[id - 1].focusInput(); // focus previous input if is last input
+      }
     }
   }
 
-  public tryCreateKVP(key: string, value: string): boolean {
+  public tryCreateKVP(key: string, value: string, context?: string): boolean {
     let foundKey = false;
     for (const kvp of this.kop.KVPs) {
       if (kvp.key === key) {
@@ -65,9 +71,13 @@ export class JsonEditorComponent implements OnInit {
       }
     }
     if (!foundKey) {
-      this.kop.KVPs.push({ key: key, value: value });
+      if (context && this.showKvpContextInput) {
+        this.kop.KVPs.push({ key: key, value: value, context: context });
+      } else {
+        this.kop.KVPs.push({ key: key, value: value });
+      }
       this.translationService.fixLanguages$.next();
-      this.model_formCreateKvp = { key: null, value: null };
+      this.model_formCreateKvp = { key: null, value: null, context: null };
       return true;
     }
     return false;
