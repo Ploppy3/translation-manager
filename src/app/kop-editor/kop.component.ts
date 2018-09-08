@@ -20,6 +20,7 @@ export class KopEditorComponent implements OnInit {
   @Input('language')
   public language: 'string';
 
+  public showKvpCreator = false;
   public showKvpContextInput = false;
   public showCategoryCreator = false;
 
@@ -141,6 +142,7 @@ export class KopEditorComponent implements OnInit {
   public trackByKvp(id, kvp: LangKVP) {
     return kvp.key;
   }
+
   public trackByKop(id, kop: LangKOP) {
     return kop.key;
   }

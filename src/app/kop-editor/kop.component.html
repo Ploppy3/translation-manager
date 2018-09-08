@@ -1,4 +1,4 @@
-<form #formDefineChild="ngForm" (ngSubmit)="addChild()" class="row inner-spacer center-items">
+<form #formCreateSubcategory="ngForm" (ngSubmit)="addChild()" class="row inner-spacer center-items">
   <span>{{kop.key}}</span>
   <button type="button" class="icon" *ngIf="kop.key != 'root' && (isBaseLanguage || (kop.KVPs.length + kop.KOPs.length > 0))"
     (click)="delete.next()" matRipple>
@@ -6,13 +6,16 @@
   </button>
   <ng-container *ngIf="isBaseLanguage">
     <i class="material-icons secondary-text">chevron_right</i>
-    <button type="button" class="icon" (click)="showCategoryCreator = !showCategoryCreator" matRipple>
-      <i class="material-icons">{{showCategoryCreator ? 'cancel' : 'add' }}</i>
+    <button [class]="showCategoryCreator ? 'icon' : 'text'" type="button" (click)="showCategoryCreator = !showCategoryCreator">
+      <span *ngIf="!showCategoryCreator; else showCancelButtonSubcategory">add subcategory</span>
+      <ng-template #showCancelButtonSubcategory>
+        <i class="material-icons">cancel</i>
+      </ng-template>
     </button>
     <ng-container *ngIf="showCategoryCreator">
       <input #inputKopName class="grow" [(ngModel)]="model_formDefineChild.name" name="name" type="text" placeholder="Define new subcategory"
-        autocomplete="off" @fade (@fade.done)="showCategoryCreator ? inputKopName.focus() : null " required>
-      <button class="icon" *ngIf="isBaseLanguage && formDefineChild.valid" matRipple>
+        autocomplete="off" @fade (@fade.done)="showCategoryCreator ? inputKopName.focus() : null" required>
+      <button class="icon" *ngIf="isBaseLanguage && formCreateSubcategory.valid" matRipple>
         <i class="material-icons">add</i>
       </button>
     </ng-container>
@@ -22,22 +25,30 @@
 
   <!--Form Create KVP-->
   <form #formCreateKVP="ngForm" class="row inner-spacer center-items" (ngSubmit)="onSubmit_FormCreateKvp()" *ngIf="isBaseLanguage">
-    <div class="grow">
-      <div class="grow flex row inner-spacer">
-        <input id="input-key-kvp" type="text" [(ngModel)]="model_formCreateKvp.key" name="key" placeholder="key"
-          autocomplete="off" required>
-        <input class="grow" type="text" [(ngModel)]="model_formCreateKvp.value" name="value" placeholder="value"
-          autocomplete="off" required>
+    <button [class]="showKvpCreator ? 'icon' : 'text'" type="button" (click)="showKvpCreator = !showKvpCreator">
+      <span *ngIf="!showKvpCreator; else showCancelButtonKvp">add key-value pair</span>
+      <ng-template #showCancelButtonKvp>
+        <i class="material-icons">cancel</i>
+      </ng-template>
+    </button>
+    <ng-container *ngIf="showKvpCreator">
+      <div class="grow">
+        <div class="grow flex row inner-spacer" @fade (@fade.done)="showKvpCreator ? inputCreateKvpKey.focus() : null">
+          <input #inputCreateKvpKey id="input-key-kvp" type="text" [(ngModel)]="model_formCreateKvp.key" name="key"
+            placeholder="key" autocomplete="off" required>
+          <input class="grow" type="text" [(ngModel)]="model_formCreateKvp.value" name="value" placeholder="value"
+            autocomplete="off" required>
+        </div>
+        <input id="input-context-kvp" class="max-width" *ngIf="showKvpContextInput" type="text" [(ngModel)]="model_formCreateKvp.context"
+          name="context" placeholder="context" autocomplete="off">
       </div>
-      <input id="input-context-kvp" class="max-width" *ngIf="showKvpContextInput" type="text" [(ngModel)]="model_formCreateKvp.context"
-        name="context" placeholder="context" autocomplete="off">
-    </div>
-    <button type="button" class="icon" (click)="showKvpContextInput = !showKvpContextInput" matRipple>
-      <i class="material-icons">{{ showKvpContextInput ? 'unfold_less' : 'unfold_more' }}</i>
-    </button>
-    <button class="icon" *ngIf="formCreateKVP.valid" matRipple>
-      <i class="material-icons">add</i>
-    </button>
+      <button type="button" class="icon" (click)="showKvpContextInput = !showKvpContextInput" matRipple>
+        <i class="material-icons">{{ showKvpContextInput ? 'unfold_less' : 'unfold_more' }}</i>
+      </button>
+      <button class="icon" *ngIf="formCreateKVP.valid" matRipple>
+        <i class="material-icons">add</i>
+      </button>
+    </ng-container>
   </form>
 
   <!--Toggle Missing KVPs-->
@@ -88,7 +99,7 @@
       </div>
       <button class="icon onHover" *ngIf="isBaseLanguage && kvp.context === undefined" (click)="kvp.context = ''; translationService.markLanguageDirty$.next(language)"
         matRipple>
-        <i class="material-icons">add</i>
+        <i class="material-icons">add_comment</i>
       </button>
       <button class="icon onHover" (click)="dropKey(kvp)" matRipple>
         <i class="material-icons">delete</i>

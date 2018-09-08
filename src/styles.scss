@@ -36,6 +36,11 @@ button {
   font-size: 1em;
   background-color: transparent;
   border: none;
+  &.text {
+    color: $accent;
+    min-height: 32px;
+    padding: 0;
+  }
   &.icon {
     display: flex;
     align-items: center;

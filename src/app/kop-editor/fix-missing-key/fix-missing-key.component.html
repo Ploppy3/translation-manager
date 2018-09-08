@@ -15,5 +15,8 @@
       </div>
     </div>
   </div>
-  <div id="missing-context" class="secondary-text" *ngIf="missingKvp.context">Context: {{missingKvp.context}}</div>
+  <div id="missing-context" class="row inner-spacer center-items secondary-text" *ngIf="missingKvp.context">
+    <i class="material-icons">subdirectory_arrow_right</i>
+    <span>Context: {{missingKvp.context}}</span>
+  </div>
 </form>
