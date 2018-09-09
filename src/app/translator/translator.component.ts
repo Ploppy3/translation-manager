@@ -17,6 +17,8 @@ import { ConfirmDialogComponent } from 'src/app/confirm-dialog/confirm-dialog.co
 import { ConfirmDialogService } from 'src/app/confirm-dialog.service';
 import { ButtonComponent } from 'src/app/button/button.component';
 import { LoggerService } from 'src/app/logger.service';
+import { MatDialog } from '@angular/material';
+import { DonationComponent } from 'src/app/donation/donation.component';
 
 @Component({
   selector: 'app-translator',
@@ -69,6 +71,7 @@ export class TranslatorComponent implements OnInit, OnDestroy {
     private snackbarService: SnackbarService,
     private confirmDialogService: ConfirmDialogService,
     private logger: LoggerService,
+    private matDialog: MatDialog,
   ) { }
 
   ngOnInit() {
@@ -100,6 +103,10 @@ export class TranslatorComponent implements OnInit, OnDestroy {
   public test(mouseEvent: MouseEvent) {
     this.logger.log(this, mouseEvent);
     const dialogRef = this.confirmDialogService.open(mouseEvent);
+  }
+
+  public openDonationDialog() {
+    this.matDialog.open(DonationComponent, { maxWidth: 350 });
   }
 
   public createNewLanguage() {

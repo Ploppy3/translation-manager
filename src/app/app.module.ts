@@ -15,6 +15,7 @@ import { UpdateComponent } from './update/update.component';
 import { TranslatorComponent } from './translator/translator.component';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { DonationComponent } from './donation/donation.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     UpdateComponent,
     TranslatorComponent,
     ConfirmDialogComponent,
+    DonationComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,6 +40,6 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [UpdateComponent, ConfirmDialogComponent]
+  entryComponents: [UpdateComponent, ConfirmDialogComponent, DonationComponent]
 })
 export class AppModule { }
