@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { SnackbarService } from './snackbar.service';
+import { SnackbarService } from 'src/app/snackbar.service';
 
 describe('SnackbarService', () => {
   beforeEach(() => {

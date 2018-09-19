@@ -8,9 +8,9 @@ describe('TranslatorComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TranslatorComponent ]
+      declarations: [TranslatorComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

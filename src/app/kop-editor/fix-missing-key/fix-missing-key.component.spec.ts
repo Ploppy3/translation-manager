@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FixMissingKeyComponent } from './fix-missing-key.component';
+import { FixMissingKeyComponent } from 'src/app/kop-editor/fix-missing-key/fix-missing-key.component';
 
 describe('FixMissingKeyComponent', () => {
   let component: FixMissingKeyComponent;

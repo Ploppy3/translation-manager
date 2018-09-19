@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ContentEditableComponent } from './content-editable.component';
+import { ContentEditableComponent } from 'src/app/content-editable/content-editable.component';
 
 describe('ContentEditableComponent', () => {
   let component: ContentEditableComponent;
