@@ -175,7 +175,7 @@ export class TranslatorComponent implements OnInit, OnDestroy {
 
   public closeProject() {
     this.baseLanguage = null;
-    this.languages = [];
+    this.languages.splice(0, this.languages.length); // empty without loosing ref in order to keep the validator working
     this.selectedLanguage = null;
   }
 
@@ -188,7 +188,10 @@ export class TranslatorComponent implements OnInit, OnDestroy {
         this.closeProject();
         if (obj.version === 1) {
           if (isArray(obj.languages)) {
-            this.languages = obj.languages;
+            obj.languages.forEach(lang => { // push without loosing ref in order to keep the validator working
+              this.languages.push(lang);
+            });
+            this.logger.log(this, this.languages);
             if (this.languages.length > 0) {
               this.selectedLanguage = this.languages[0];
             }
