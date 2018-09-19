@@ -3,7 +3,7 @@
     <app-button icon="open_in_browser" (clicked)="inputImportProject.click()">import project</app-button>
     <app-button icon="save_alt" (clicked)="exportLanguages()" [disabled]="languages.length === 0">export languages</app-button>
     <app-button icon="save_alt" (clicked)="exportProject()" [disabled]="languages.length === 0">export project</app-button>
-    <app-button icon="close" (clicked)="closeProject()" [disabled]="languages.length === 0">close project</app-button>
+    <app-button icon="close" (clicked)="askCloseProject($event)" [disabled]="languages.length === 0">close project</app-button>
     <app-button (clicked)="openDonationDialog()">support/contact</app-button>
     <app-button *ngIf="!environment.production" icon="bug_report" (clicked)="test($event)">test</app-button>
   </div>

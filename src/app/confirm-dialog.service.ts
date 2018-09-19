@@ -1,8 +1,9 @@
 import { Injectable, Injector } from '@angular/core';
 import { ComponentPortal, PortalInjector } from '@angular/cdk/portal';
+import { Overlay, GlobalPositionStrategy } from '@angular/cdk/overlay';
 import { ConfirmDialogComponent } from 'src/app/confirm-dialog/confirm-dialog.component';
-import { Overlay, GlobalPositionStrategy, OverlayRef } from '@angular/cdk/overlay';
 import { LoggerService } from 'src/app/logger.service';
+import { ConfirmDialogRef } from 'src/app/confirm-dialog/confirm-dialog-ref';
 
 @Injectable({
   providedIn: 'root',
@@ -20,39 +21,28 @@ export class ConfirmDialogService {
   public open(mouseEvent: MouseEvent) {
     const positionStrategy = new GlobalPositionStrategy();
     positionStrategy.left(mouseEvent.clientX - 18 + 'px');
-    positionStrategy.top(mouseEvent.clientY - 13 + 'px');
+    positionStrategy.top(mouseEvent.clientY - 18 + 'px');
+
     const overlayRef = this.overlay.create({
       hasBackdrop: true,
       positionStrategy: positionStrategy,
       scrollStrategy: this.overlay.scrollStrategies.block(),
     });
-    const dialogRef = new CustomOverlayRef(overlayRef);
-    const customInjector = this.createInjector(dialogRef);
-    /* THIS CODE IS NEEDED THOUGH DISABLED BECAUSE IT CRASHES THE APP
-    const componentPortal = new ComponentPortal(ConfirmDialogComponent, null, customInjector);
-    const componentRef = overlayRef.attach(componentPortal);
+
+    const dialogRef = new ConfirmDialogRef(overlayRef);
+    const injector = this.createInjector(dialogRef);
+    const containerPortal = new ComponentPortal(ConfirmDialogComponent, null, injector);
+    const componentRef = overlayRef.attach(containerPortal);
+    const overlayComponent = componentRef.instance;
     overlayRef.backdropClick().subscribe(() => {
-      dialogRef.close();
+      dialogRef.close(false);
     });
-    return componentRef.instance;
-    // */
+    return dialogRef;
   }
 
-  private createInjector(customOverlayRef: CustomOverlayRef) {
+  private createInjector(dialogRef: ConfirmDialogRef) {
     const injectionTokens = new WeakMap();
-    injectionTokens.set(CustomOverlayRef, customOverlayRef);
+    injectionTokens.set(ConfirmDialogRef, dialogRef);
     return new PortalInjector(this.injector, injectionTokens);
   }
-}
-
-export class CustomOverlayRef {
-
-  constructor(
-    private overlayRef: OverlayRef,
-  ) { }
-
-  public close(value?: any) {
-    this.overlayRef.dispose();
-  }
-
 }

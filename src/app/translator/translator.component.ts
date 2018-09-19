@@ -101,8 +101,9 @@ export class TranslatorComponent implements OnInit, OnDestroy {
   }
 
   public test(mouseEvent: MouseEvent) {
-    this.logger.log(this, mouseEvent);
-    const dialogRef = this.confirmDialogService.open(mouseEvent);
+    this.confirmDialogService.open(mouseEvent).confirm$.subscribe(confirm => {
+      console.log(confirm);
+    });
   }
 
   public openDonationDialog() {
@@ -165,6 +166,15 @@ export class TranslatorComponent implements OnInit, OnDestroy {
     const url = URL.createObjectURL(blob);
     downloadUrl(url, this.selectedLanguage.fileName + '.json');
     URL.revokeObjectURL(url);
+  }
+
+  public askCloseProject(event: MouseEvent) {
+    this.confirmDialogService.open(event).confirm$.subscribe(confirm => {
+      console.log(confirm);
+      if (confirm) {
+        this.closeProject();
+      }
+    });
   }
 
   public closeProject() {
