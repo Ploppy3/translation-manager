@@ -18,7 +18,7 @@ import { trigger, state, transition, style, animate, query, group, animateChild 
       state('visible', style({})),
       state('hidden', style({ transform: 'scale(0)' })),
       transition('* => hidden', [
-        animate('.5s ease-in-out', style({ transform: 'scale(0)' })),
+        animate('.25s ease-in-out', style({ transform: 'scale(0)' })),
       ]),
     ]),
   ],
