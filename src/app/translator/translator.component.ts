@@ -1,6 +1,5 @@
 import { Component, OnInit, EventEmitter, OnDestroy } from '@angular/core';
 import { collapse, fade } from 'src/app/animations';
-import { en as englishData, en_complete as englishDataComplete, en_absurd as englishDataAbsurd, fr as frenchData } from 'src/app/languages';
 import { Lang, Project } from 'src/app/structure';
 import { fixLanguage, kopToObject, fixAllLanguages, createKopFromObject, createKopFromLanguage } from 'src/app/translation-manager';
 import { TranslationService } from 'src/app/translation.service';
@@ -11,11 +10,7 @@ import { downloadUrl, isArray, isNumber } from 'src/app/util';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { SnackbarService } from 'src/app/snackbar.service';
 import { environment } from 'src/environments/environment';
-import { Overlay, GlobalPositionStrategy } from '@angular/cdk/overlay';
-import { ComponentPortal } from '@angular/cdk/portal';
-import { ConfirmDialogComponent } from 'src/app/confirm-dialog/confirm-dialog.component';
 import { ConfirmDialogService } from 'src/app/confirm-dialog.service';
-import { ButtonComponent } from 'src/app/button/button.component';
 import { LoggerService } from 'src/app/logger.service';
 import { MatDialog } from '@angular/material';
 import { DonationComponent } from 'src/app/donation/donation.component';
@@ -101,9 +96,11 @@ export class TranslatorComponent implements OnInit, OnDestroy {
   }
 
   public test(mouseEvent: MouseEvent) {
+    /*
     this.confirmDialogService.open(mouseEvent).confirm$.subscribe(confirm => {
       console.log(confirm);
     });
+    //*/
   }
 
   public openDonationDialog() {
@@ -170,7 +167,6 @@ export class TranslatorComponent implements OnInit, OnDestroy {
 
   public askCloseProject(event: MouseEvent) {
     this.confirmDialogService.open(event).confirm$.subscribe(confirm => {
-      console.log(confirm);
       if (confirm) {
         this.closeProject();
       }
@@ -203,7 +199,7 @@ export class TranslatorComponent implements OnInit, OnDestroy {
           }
         }
       } catch (error) {
-        console.warn(error);
+        this.logger.warn(error);
         this.snackbarService.showMessage('An error occured, could not open project');
       }
     };
