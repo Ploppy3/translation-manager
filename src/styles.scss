@@ -40,6 +40,7 @@ button {
   font-size: 1em;
   background-color: transparent;
   border: none;
+  flex-shrink: 0;
   &.text {
     color: $accent;
     min-height: 32px;
