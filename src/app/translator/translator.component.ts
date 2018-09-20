@@ -173,6 +173,22 @@ export class TranslatorComponent implements OnInit, OnDestroy {
     });
   }
 
+  public askDeleteLanguage(event: MouseEvent) {
+    this.confirmDialogService.open(event).confirm$.subscribe(confirm => {
+      if (confirm) {
+        this.deleteLanguage();
+      }
+    });
+  }
+
+  public askSetBaseLanguage(event: MouseEvent) {
+    this.confirmDialogService.open(event).confirm$.subscribe(confirm => {
+      if (confirm) {
+        this.setBaseLanguage();
+      }
+    });
+  }
+
   public closeProject() {
     this.baseLanguage = null;
     this.languages.splice(0, this.languages.length); // empty without loosing ref in order to keep the validator working

@@ -75,12 +75,12 @@
       <div class="row inner-spacer center-items">
         <app-button icon="open_in_browser" (clicked)="uploader.click()">import language</app-button>
         <app-button icon="save_alt" (clicked)="exportLanguage(selectedLanguage)">export language</app-button>
-        <app-button icon="delete" (clicked)="deleteLanguage()">delete language</app-button>
-        <app-button *ngIf="selectedLanguage != baseLanguage" icon="star" (clicked)="setBaseLanguage()">
+        <app-button icon="delete" (clicked)="askDeleteLanguage($event)">delete language</app-button>
+        <app-button *ngIf="selectedLanguage != baseLanguage" icon="star" (clicked)="askSetBaseLanguage($event)">
           set as base language
         </app-button>
       </div>
-      <app-kop class="overflow" [kop]="selectedLanguage.kop" [language]="selectedLanguage.name" [isBaseLanguage]="selectedLanguage == baseLanguage">Root</app-kop>
+      <app-kop [kop]="selectedLanguage.kop" [language]="selectedLanguage.name" [isBaseLanguage]="selectedLanguage == baseLanguage">Root</app-kop>
       <!--
       <pre>{{selectedLanguage.kop|json}}</pre>
       -->
