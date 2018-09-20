@@ -1,5 +1,5 @@
 <div class="col spacer no-overflow">
-  <div id="wrapper-actions" class="row inner-spacer center-items overflow">
+  <div id="wrapper-actions" class="row inner-spacer center-items overflow-auto">
     <app-button icon="open_in_browser" (clicked)="inputImportProject.click()">import project</app-button>
     <app-button icon="save_alt" (clicked)="exportLanguages()" [disabled]="languages.length === 0">export languages</app-button>
     <app-button icon="save_alt" (clicked)="exportProject()" [disabled]="languages.length === 0">export project</app-button>
@@ -44,7 +44,7 @@
     </form>
   </div>
   <div *ngIf="languages.length > 0" @fade>
-    <div id="wrapper-tabs" class="row overflow">
+    <div id="wrapper-tabs" class="row overflow-auto">
       <div class="row inner-spacer center-items" [class.selected]="language == selectedLanguage" [class.clickable]="selectedLanguage != language"
         *ngFor="let language of languages" (click)="selectedLanguage = language">
         <div *ngIf="language != baseLanguage" class="status" [class.success]="language == baseLanguage || language.errorCount == 0"
@@ -56,7 +56,7 @@
         @fade>add</i>
     </div>
 
-    <div id="language" class="col inner-spacer" *ngIf="selectedLanguage != null">
+    <div id="language" class="col inner-spacer overflow-auto" *ngIf="selectedLanguage != null">
       <div>
         <button class="icon" (click)="showLanguageSettings = !showLanguageSettings" matRipple>
           <i class="material-icons">settings</i>
@@ -72,7 +72,7 @@
         File:
         <app-content-editable [variable]="selectedLanguage.fileName" (change)="this.selectedLanguage.fileName = $event"></app-content-editable>.json
       </div>
-      <div class="row inner-spacer center-items overflow">
+      <div class="row inner-spacer center-items">
         <app-button icon="open_in_browser" (clicked)="uploader.click()">import language</app-button>
         <app-button icon="save_alt" (clicked)="exportLanguage(selectedLanguage)">export language</app-button>
         <app-button icon="delete" (clicked)="deleteLanguage()">delete language</app-button>
