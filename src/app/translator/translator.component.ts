@@ -183,7 +183,7 @@ export class TranslatorComponent implements OnInit, OnDestroy {
     const dialogRef = this.matDialog.open(DialogConfirmComponent);
     const componentRef = dialogRef.componentInstance;
     componentRef.message = 'Close the project ?';
-    componentRef.action = 'ok';
+    componentRef.action = 'close';
     dialogRef.afterClosed().subscribe(confirm => {
       if (confirm) {
         this.closeProject();
