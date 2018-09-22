@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ConfirmDialogComponent } from 'src/app/confirm-dialog/confirm-dialog.component';
+import { ConfirmPopOverComponent } from 'src/app/confirm-pop-over/confirm-pop-over.component';
 
 describe('ConfirmDialogComponent', () => {
-  let component: ConfirmDialogComponent;
-  let fixture: ComponentFixture<ConfirmDialogComponent>;
+  let component: ConfirmPopOverComponent;
+  let fixture: ComponentFixture<ConfirmPopOverComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ConfirmDialogComponent]
+      declarations: [ConfirmPopOverComponent]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ConfirmDialogComponent);
+    fixture = TestBed.createComponent(ConfirmPopOverComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

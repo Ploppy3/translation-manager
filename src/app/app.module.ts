@@ -14,8 +14,9 @@ import { environment } from 'src/environments/environment';
 import { UpdateComponent } from 'src/app/update/update.component';
 import { TranslatorComponent } from 'src/app/translator/translator.component';
 import { OverlayModule } from '@angular/cdk/overlay';
-import { ConfirmDialogComponent } from 'src/app/confirm-dialog/confirm-dialog.component';
+import { ConfirmPopOverComponent } from 'src/app/confirm-pop-over/confirm-pop-over.component';
 import { DonationComponent } from 'src/app/donation/donation.component';
+import { DialogConfirmComponent } from 'src/app/dialog-confirm/dialog-confirm.component';
 
 @NgModule({
   declarations: [
@@ -26,8 +27,9 @@ import { DonationComponent } from 'src/app/donation/donation.component';
     ButtonComponent,
     UpdateComponent,
     TranslatorComponent,
-    ConfirmDialogComponent,
+    ConfirmPopOverComponent,
     DonationComponent,
+    DialogConfirmComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,6 +42,11 @@ import { DonationComponent } from 'src/app/donation/donation.component';
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [UpdateComponent, ConfirmDialogComponent, DonationComponent]
+  entryComponents: [
+    UpdateComponent,
+    ConfirmPopOverComponent,
+    DonationComponent,
+    DialogConfirmComponent,
+  ]
 })
 export class AppModule { }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DoCheck } from '@angular/core';
 import { SnackbarService } from 'src/app/snackbar.service';
 import { MatSnackBar } from '@angular/material';
 import { SwUpdate } from '@angular/service-worker';
@@ -10,7 +10,7 @@ import { LoggerService } from 'src/app/logger.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, DoCheck {
 
   constructor(
     private snackbarService: SnackbarService,
@@ -32,5 +32,9 @@ export class AppComponent implements OnInit {
     this.snackbarService.snackbarString$.subscribe(message => {
       this.snackbar.open(message, null, { duration: 2000 });
     });
+  }
+
+  ngDoCheck(): void {
+    console.log('check');
   }
 }

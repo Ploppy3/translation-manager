@@ -5,7 +5,12 @@
     <app-button icon="save_alt" (clicked)="exportProject()" [disabled]="languages.length === 0">export project</app-button>
     <app-button icon="close" (clicked)="askCloseProject($event)" [disabled]="languages.length === 0">close project</app-button>
     <app-button (clicked)="openDonationDialog()">support/contact</app-button>
-    <app-button *ngIf="!environment.production" icon="bug_report" (clicked)="test($event)">test</app-button>
+    <app-button #buttonDebug *ngIf="!environment.production" icon="bug_report" (clicked)="test($event, buttonDebug.elementRef)">test</app-button>
+  </div>
+  <div id="wrapper-actions-mobile">
+    <button class="icon" type="button" [matMenuTriggerFor]="menu" matRipple>
+      <i class="material-icons">menu</i>
+    </button>
   </div>
   <div *ngIf="showLanguageCreator === true || languages.length === 0" [@collapse] (@collapse.done)="showLanguageCreator ? inputNameLanguage.focus() : null">
     <form id="language-creator" [formGroup]="formLanguage" (ngSubmit)="createNewLanguage()">
@@ -87,6 +92,32 @@
     </div>
   </div>
 </div>
+
+
+
+
+<mat-menu #menu="matMenu">
+  <button class="row inner-spacer" (click)="inputImportProject.click()" mat-menu-item>
+    <i class="material-icons">open_in_browser</i>
+    <span>import project</span>
+  </button>
+  <button class="row inner-spacer" (click)="exportLanguages()" [disabled]="languages.length === 0" mat-menu-item>
+    <i class="material-icons">save_alt</i>
+    <span>export languages</span>
+  </button>
+  <button class="row inner-spacer" (click)="exportProject()" [disabled]="languages.length === 0" mat-menu-item>
+    <i class="material-icons">save_alt</i>
+    <span>export project</span>
+  </button>
+  <button class="row inner-spacer" (click)="askCloseProjectByDialog()" [disabled]="languages.length === 0"
+    mat-menu-item>
+    <i class="material-icons">close</i>
+    <span>close project</span>
+  </button>
+  <button (click)="openDonationDialog()" mat-menu-item>
+    <span>support/contact</span>
+  </button>
+</mat-menu>
 
 <input #uploader type="file" (change)="importLanguage($event)" accept=".json" hidden>
 <input #inputImportProject type="file" (change)="importProject($event)" accept=".json" hidden>

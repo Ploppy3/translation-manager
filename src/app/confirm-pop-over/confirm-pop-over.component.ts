@@ -1,11 +1,11 @@
 import { Component, OnInit, HostBinding, HostListener } from '@angular/core';
-import { ConfirmDialogRef } from 'src/app/confirm-dialog/confirm-dialog-ref';
+import { ConfirmDialogRef } from 'src/app/confirm-pop-over/confirm-pop-over-ref';
 import { trigger, state, transition, style, animate, query, group, animateChild } from '@angular/animations';
 
 @Component({
   selector: 'app-confirm-dialog',
-  templateUrl: './confirm-dialog.component.html',
-  styleUrls: ['./confirm-dialog.component.scss'],
+  templateUrl: './confirm-pop-over.component.html',
+  styleUrls: ['./confirm-pop-over.component.scss'],
   animations: [
     trigger('dialogEnter', [
       transition(':enter', [
@@ -23,7 +23,7 @@ import { trigger, state, transition, style, animate, query, group, animateChild 
     ]),
   ],
 })
-export class ConfirmDialogComponent implements OnInit {
+export class ConfirmPopOverComponent implements OnInit {
 
   private confirm: boolean;
 

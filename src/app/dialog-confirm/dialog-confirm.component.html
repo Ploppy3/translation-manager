@@ -1,0 +1,5 @@
+<mat-dialog-content id="question" class="secondary">{{message}}</mat-dialog-content>
+<mat-dialog-actions class="row inner-spacer">
+  <button mat-stroked-button (click)="dialog.close()">Annuler</button>
+  <button mat-flat-button (click)="dialog.close(true)" color="accent">{{action}}</button>
+</mat-dialog-actions>

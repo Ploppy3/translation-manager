@@ -8,9 +8,9 @@ describe('ContentEditableComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ContentEditableComponent ]
+      declarations: [ContentEditableComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

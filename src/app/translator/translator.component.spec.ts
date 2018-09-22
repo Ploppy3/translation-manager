@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TranslatorComponent } from './translator.component';
+import { TranslatorComponent } from 'src/app/translator/translator.component';
 
 describe('TranslatorComponent', () => {
   let component: TranslatorComponent;

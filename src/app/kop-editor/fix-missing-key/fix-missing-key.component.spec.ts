@@ -8,9 +8,9 @@ describe('FixMissingKeyComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FixMissingKeyComponent ]
+      declarations: [FixMissingKeyComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

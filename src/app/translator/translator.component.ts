@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, EventEmitter, OnDestroy, ElementRef } from '@angular/core';
 import { collapse, fade } from 'src/app/animations';
 import { Lang, Project } from 'src/app/structure';
 import { fixLanguage, kopToObject, fixAllLanguages, createKopFromObject, createKopFromLanguage } from 'src/app/translation-manager';
@@ -14,6 +14,7 @@ import { ConfirmDialogService } from 'src/app/confirm-dialog.service';
 import { LoggerService } from 'src/app/logger.service';
 import { MatDialog } from '@angular/material';
 import { DonationComponent } from 'src/app/donation/donation.component';
+import { DialogConfirmComponent } from 'src/app/dialog-confirm/dialog-confirm.component';
 
 @Component({
   selector: 'app-translator',
@@ -95,12 +96,25 @@ export class TranslatorComponent implements OnInit, OnDestroy {
     });
   }
 
-  public test(mouseEvent: MouseEvent) {
+  public test(mouseEvent: MouseEvent, elRef: ElementRef) {
     /*
-    this.confirmDialogService.open(mouseEvent).confirm$.subscribe(confirm => {
+    const promiseRemote = {
+      resolve: null,
+      reject: null,
+    };
+    const promise = new Promise((resolve, reject) => {
+      promiseRemote.resolve = resolve;
+      promiseRemote.reject = reject;
+    });
+    promise.then((value) => {
+      this.logger.log(this, 'then');
+    });
+    // */
+    // *
+    this.confirmDialogService.openFlexible(mouseEvent, elRef).confirm$.subscribe(confirm => {
       console.log(confirm);
     });
-    //*/
+    // */
   }
 
   public openDonationDialog() {
@@ -163,6 +177,18 @@ export class TranslatorComponent implements OnInit, OnDestroy {
     const url = URL.createObjectURL(blob);
     downloadUrl(url, this.selectedLanguage.fileName + '.json');
     URL.revokeObjectURL(url);
+  }
+
+  public askCloseProjectByDialog() {
+    const dialogRef = this.matDialog.open(DialogConfirmComponent);
+    const componentRef = dialogRef.componentInstance;
+    componentRef.message = 'Close the project ?';
+    componentRef.action = 'ok';
+    dialogRef.afterClosed().subscribe(confirm => {
+      if (confirm) {
+        this.closeProject();
+      }
+    });
   }
 
   public askCloseProject(event: MouseEvent) {
