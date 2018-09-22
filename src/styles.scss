@@ -3,6 +3,7 @@
 @import 'src/material-theme.scss';
 html {
   overflow-y: scroll;
+  overscroll-behavior: none;
 }
 body {
   font-family: 'Roboto', sans-serif;
