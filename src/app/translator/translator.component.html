@@ -97,22 +97,29 @@
 
 
 <mat-menu #menu="matMenu">
-  <button class="row inner-spacer" (click)="inputImportProject.click()" mat-menu-item>
-    <i class="material-icons">open_in_browser</i>
-    <span>import project</span>
+  <button (click)="inputImportProject.click()" mat-menu-item>
+    <div class="row inner-spacer center-items">
+      <i class="material-icons">open_in_browser</i>
+      <span>import project</span>
+    </div>
   </button>
-  <button class="row inner-spacer" (click)="exportLanguages()" [disabled]="languages.length === 0" mat-menu-item>
-    <i class="material-icons">save_alt</i>
-    <span>export languages</span>
+  <button (click)="exportLanguages()" [disabled]="languages.length === 0" mat-menu-item>
+    <div class="row inner-spacer center-items">
+      <i class="material-icons">save_alt</i>
+      <span>export languages</span>
+    </div>
   </button>
-  <button class="row inner-spacer" (click)="exportProject()" [disabled]="languages.length === 0" mat-menu-item>
-    <i class="material-icons">save_alt</i>
-    <span>export project</span>
+  <button (click)="exportProject()" [disabled]="languages.length === 0" mat-menu-item>
+    <div class="row inner-spacer center-items">
+      <i class="material-icons">save_alt</i>
+      <span>export project</span>
+    </div>
   </button>
-  <button class="row inner-spacer" (click)="askCloseProjectByDialog()" [disabled]="languages.length === 0"
-    mat-menu-item>
-    <i class="material-icons">close</i>
-    <span>close project</span>
+  <button (click)="askCloseProjectByDialog()" [disabled]="languages.length === 0" mat-menu-item>
+    <div class="row inner-spacer center-items">
+      <i class="material-icons">close</i>
+      <span>close project</span>
+    </div>
   </button>
   <button (click)="openDonationDialog()" mat-menu-item>
     <span>support/contact</span>
