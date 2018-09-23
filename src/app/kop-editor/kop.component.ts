@@ -3,6 +3,7 @@ import { LangKOP, LangKVP } from 'src/app/structure';
 import { TranslationService } from 'src/app/translation.service';
 import { FixMissingKeyComponent } from 'src/app/kop-editor/fix-missing-key/fix-missing-key.component';
 import { fade } from 'src/app/animations';
+import { ConfirmDialogService } from 'src/app/confirm-dialog.service';
 
 @Component({
   selector: 'app-kop',
@@ -43,6 +44,7 @@ export class KopEditorComponent implements OnInit {
 
   constructor(
     public translationService: TranslationService,
+    public confirmPopUpService: ConfirmDialogService,
   ) { }
 
   ngOnInit(): void {
@@ -110,6 +112,15 @@ export class KopEditorComponent implements OnInit {
       this.kop.KVPs.splice(pos, 1);
       this.translationService.markLanguageDirty$.next(this.language);
     }
+  }
+
+  public askDeleteKop(event: MouseEvent) {
+    const confirmDialogRef = this.confirmPopUpService.open(event);
+    confirmDialogRef.confirm$.subscribe(userConfirmed => {
+      if (userConfirmed) {
+        this.delete.next();
+      }
+    });
   }
 
   public dropKop(kop: LangKOP) {

@@ -1,7 +1,7 @@
 <form #formCreateSubcategory="ngForm" (ngSubmit)="addChild()" class="row inner-spacer center-items">
   <span>{{kop.key}}</span>
   <button type="button" class="icon" *ngIf="kop.key != 'root' && (isBaseLanguage || (kop.KVPs.length + kop.KOPs.length > 0))"
-    (click)="delete.next()" matRipple>
+    (click)="askDeleteKop($event)" matRipple>
     <i class="material-icons">delete</i>
   </button>
   <ng-container *ngIf="isBaseLanguage">
