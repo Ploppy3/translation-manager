@@ -1,5 +1,7 @@
 # TranslationManager
 
+[Live project](https://translation-manager-86c3d.firebaseapp.com/)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.3.
 
 ## Development server
