@@ -75,7 +75,7 @@
       -->
       <div *ngIf="showLanguageSettings" [@collapse]>
         File:
-        <app-content-editable [variable]="selectedLanguage.fileName" (change)="this.selectedLanguage.fileName = $event"></app-content-editable>.json
+        <app-content-editable [variable]="selectedLanguage.fileName" (change)="selectedLanguage.fileName = $event"></app-content-editable>.json
       </div>
       <div class="row inner-spacer center-items">
         <app-button icon="open_in_browser" (clicked)="uploader.click()">import language</app-button>

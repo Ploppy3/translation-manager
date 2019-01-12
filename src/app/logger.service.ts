@@ -21,6 +21,7 @@ export class LoggerService {
       if (this.forceStackTrace) {
         console.warn(...args);
       } else {
+        // tslint:disable-next-line:no-console
         console.log(...args);
       }
     }
