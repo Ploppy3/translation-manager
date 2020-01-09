@@ -12,7 +12,7 @@ import { SnackbarService } from 'src/app/snackbar.service';
 import { environment } from 'src/environments/environment';
 import { ConfirmDialogService } from 'src/app/confirm-dialog.service';
 import { LoggerService } from 'src/app/logger.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { DonationComponent } from 'src/app/donation/donation.component';
 import { DialogConfirmComponent } from 'src/app/dialog-confirm/dialog-confirm.component';
 
