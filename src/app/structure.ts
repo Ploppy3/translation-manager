@@ -21,7 +21,6 @@ export interface Lang {
 export interface LangKOP {
   key: string;
   KVPs: LangKVP[];
-  /**array of  */
   KOPs: LangKOP[];
   /**the list of missing key-value pairs for this language */
   missingKVPs: LangKVP[];

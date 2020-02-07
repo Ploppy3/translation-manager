@@ -162,7 +162,7 @@ export class TranslatorComponent implements OnInit, OnDestroy {
     const file_reader = new FileReader();
     file_reader.onload = (onLoad_event) => {
       try {
-        this.selectedLanguage.kop = createKopFromObject(JSON.parse(onLoad_event.target['result']));
+        this.selectedLanguage.kop = createKopFromObject(JSON.parse(onLoad_event.target['result'] as string));
         fixAllLanguages(this.baseLanguage, this.languages);
       } catch (error) { }
     };
@@ -226,7 +226,7 @@ export class TranslatorComponent implements OnInit, OnDestroy {
     const file_reader = new FileReader();
     file_reader.onload = (onLoad_event) => {
       try {
-        const obj: Project = JSON.parse(onLoad_event.target['result']);
+        const obj: Project = JSON.parse(onLoad_event.target['result'] as string);
         this.closeProject();
         if (obj.version === 1) {
           if (isArray(obj.languages)) {
