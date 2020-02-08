@@ -13,7 +13,7 @@ export class ContentEditableComponent implements OnInit {
   private span: HTMLSpanElement;
 
   @Output() change = new EventEmitter<string>();
-  @ViewChild('span') _spanRef: ElementRef;
+  @ViewChild('span', { static: true }) _spanRef: ElementRef;
 
   @Input('variable') set setVariable(value: string) {
     this.var = value;

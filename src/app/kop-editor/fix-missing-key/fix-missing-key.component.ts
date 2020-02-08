@@ -9,7 +9,7 @@ import { LangKVP } from 'src/app/structure';
 export class FixMissingKeyComponent implements OnInit {
 
   public inputValue: HTMLInputElement;
-  @ViewChild('inputValue') set setInputValue(value: ElementRef) {
+  @ViewChild('inputValue', { static: true }) set setInputValue(value: ElementRef) {
     this.inputValue = value.nativeElement;
   }
 
