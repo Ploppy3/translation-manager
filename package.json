@@ -26,7 +26,7 @@
     "@angular/service-worker": "^10.0.9",
     "core-js": "^2.5.4",
     "jszip": "^3.1.5",
-    "rxjs": "^6.3.2",
+    "rxjs": "^6.6.2",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"
   },
