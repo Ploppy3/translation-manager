@@ -1,9 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChildren, QueryList, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { LangKOP, LangKVP } from 'src/app/structure';
 import { TranslationService } from 'src/app/translation.service';
 import { FixMissingKeyComponent } from 'src/app/kop-editor/fix-missing-key/fix-missing-key.component';
 import { fade } from 'src/app/animations';
 import { ConfirmDialogService } from 'src/app/confirm-dialog.service';
+import { Subscription } from 'rxjs';
+import { CollapseService } from 'src/app/services/collapse.service';
 
 @Component({
   selector: 'app-kop',
@@ -12,23 +14,20 @@ import { ConfirmDialogService } from 'src/app/confirm-dialog.service';
   animations: [fade],
 })
 /**KOP stands for Key Object Pair, the base element of a translation */
-export class KopEditorComponent implements OnInit {
+export class KopEditorComponent implements OnInit, OnDestroy {
 
-  @Input('kop')
-  public kop: LangKOP;
-  @Input('isBaseLanguage')
-  public isBaseLanguage: false;
-  @Input('language')
-  public language: 'string';
+  @Input('kop') kop: LangKOP;
+  @Input('isBaseLanguage') isBaseLanguage: false;
+  @Input('language') language: 'string';
+
+  @Output() delete = new EventEmitter<void>();
+
+  @ViewChild('inputCreateKvpKey') inputCreateKvpKey: ElementRef<HTMLInputElement>;
+  @ViewChildren(FixMissingKeyComponent) fixMissingKeyComponents: QueryList<FixMissingKeyComponent>;
 
   public showKvpCreator = false;
   public showKvpContextInput = false;
   public showCategoryCreator = false;
-
-  @Output()
-  public delete = new EventEmitter<void>();
-
-  @ViewChildren(FixMissingKeyComponent) fixMissingKeyComponents: QueryList<FixMissingKeyComponent>;
 
   public model_formCreateKvp = {
     key: null,
@@ -42,16 +41,29 @@ export class KopEditorComponent implements OnInit {
     name: null,
   };
 
+  private subs: Subscription[] = [];
+
   constructor(
     public translationService: TranslationService,
     public confirmPopUpService: ConfirmDialogService,
+    private collapseService: CollapseService,
   ) { }
 
   ngOnInit(): void {
+    this.subs.push(
+      this.collapseService.onCollapseAll$.subscribe(() => {
+        this.kop.showInputCreateChild = false;
+        this.showCategoryCreator = false;
+        this.kop.showKVPs = false;
+        this.kop.showMissingKVPs = false;
+      })
+    );
   }
 
   public onSubmit_FormCreateKvp() {
-    this.tryCreateKVP(this.model_formCreateKvp.key, this.model_formCreateKvp.value, this.model_formCreateKvp.context);
+    if (this.tryCreateKVP(this.model_formCreateKvp.key, this.model_formCreateKvp.value, this.model_formCreateKvp.context)) {
+      this.inputCreateKvpKey.nativeElement.focus();
+    }
   }
 
   public onFix(kvp: { key: string, value: string }, id: number) {
@@ -104,6 +116,7 @@ export class KopEditorComponent implements OnInit {
       this.model_formDefineChild.name = null;
       this.translationService.markLanguageDirty$.next(this.language);
     }
+    this.showCategoryCreator = false;
   }
 
   public dropKey(kvp: LangKVP) {
@@ -158,4 +171,7 @@ export class KopEditorComponent implements OnInit {
     return kop.key;
   }
 
+  ngOnDestroy() {
+    this.subs.forEach(sub => sub.unsubscribe());
+  }
 }

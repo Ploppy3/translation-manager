@@ -15,6 +15,7 @@ import { LoggerService } from 'src/app/logger.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DonationComponent } from 'src/app/donation/donation.component';
 import { DialogConfirmComponent } from 'src/app/dialog-confirm/dialog-confirm.component';
+import { CollapseService } from 'src/app/services/collapse.service';
 
 @Component({
   selector: 'app-translator',
@@ -63,6 +64,7 @@ export class TranslatorComponent implements OnInit, OnDestroy {
   });
 
   constructor(
+    public collapseService: CollapseService,
     private translationService: TranslationService,
     private snackbarService: SnackbarService,
     private confirmDialogService: ConfirmDialogService,

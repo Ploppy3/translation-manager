@@ -1,20 +1,23 @@
 <form #formCreateSubcategory="ngForm" (ngSubmit)="addChild()" class="row inner-spacer center-items">
   <span>{{kop.key}}</span>
-  <button type="button" class="icon" *ngIf="kop.key != 'root' && (isBaseLanguage || (kop.KVPs.length + kop.KOPs.length > 0))"
+  <button type="button" class="icon"
+    *ngIf="kop.key != 'root' && (isBaseLanguage || (kop.KVPs.length + kop.KOPs.length > 0))"
     (click)="askDeleteKop($event)" matRipple>
     <i class="material-icons">delete</i>
   </button>
   <ng-container *ngIf="isBaseLanguage">
     <i class="material-icons secondary-text">chevron_right</i>
-    <button [class]="showCategoryCreator ? 'icon' : 'text'" type="button" (click)="showCategoryCreator = !showCategoryCreator">
+    <button [class]="showCategoryCreator ? 'icon' : 'text'" type="button"
+      (click)="showCategoryCreator = !showCategoryCreator">
       <span *ngIf="!showCategoryCreator; else showCancelButtonSubcategory">add subcategory</span>
       <ng-template #showCancelButtonSubcategory>
         <i class="material-icons">cancel</i>
       </ng-template>
     </button>
     <ng-container *ngIf="showCategoryCreator">
-      <input #inputKopName class="grow" [(ngModel)]="model_formDefineChild.name" name="name" type="text" placeholder="Define new subcategory"
-        autocomplete="off" @fade (@fade.done)="showCategoryCreator ? inputKopName.focus() : null" required>
+      <input #inputKopName class="grow" [(ngModel)]="model_formDefineChild.name" name="name" type="text"
+        placeholder="Define new subcategory" autocomplete="off" @fade
+        (@fade.done)="showCategoryCreator ? inputKopName.focus() : null" required>
       <button class="icon" *ngIf="isBaseLanguage && formCreateSubcategory.valid" matRipple>
         <i class="material-icons">add</i>
       </button>
@@ -24,7 +27,8 @@
 <div id="content">
 
   <!--Form Create KVP-->
-  <form #formCreateKVP="ngForm" class="row inner-spacer center-items" (ngSubmit)="onSubmit_FormCreateKvp()" *ngIf="isBaseLanguage">
+  <form #formCreateKVP="ngForm" class="row inner-spacer center-items" *ngIf="isBaseLanguage"
+    (ngSubmit)="onSubmit_FormCreateKvp()">
     <button [class]="showKvpCreator ? 'icon' : 'text'" type="button" (click)="showKvpCreator = !showKvpCreator">
       <span *ngIf="!showKvpCreator; else showCancelButtonKvp">add key-value pair</span>
       <ng-template #showCancelButtonKvp>
@@ -39,8 +43,8 @@
           <input class="grow" type="text" [(ngModel)]="model_formCreateKvp.value" name="value" placeholder="value"
             autocomplete="off" required>
         </div>
-        <input id="input-context-kvp" class="max-width" *ngIf="showKvpContextInput" type="text" [(ngModel)]="model_formCreateKvp.context"
-          name="context" placeholder="context" autocomplete="off">
+        <input id="input-context-kvp" class="max-width" *ngIf="showKvpContextInput" type="text"
+          [(ngModel)]="model_formCreateKvp.context" name="context" placeholder="context" autocomplete="off">
       </div>
       <button type="button" class="icon" (click)="showKvpContextInput = !showKvpContextInput" matRipple>
         <i class="material-icons">{{ showKvpContextInput ? 'unfold_less' : 'unfold_more' }}</i>
@@ -63,8 +67,8 @@
 
   <!--Forms Fix Missing KVPs-->
   <ng-container *ngIf="kop.showMissingKVPs">
-    <app-fix-missing-key *ngFor="let key of kop.missingKVPs; let i = index; trackBy: trackByMissingKvp" [missingKvp]="key"
-      (fix)="onFix($event, i)"></app-fix-missing-key>
+    <app-fix-missing-key *ngFor="let key of kop.missingKVPs; let i = index; trackBy: trackByMissingKvp"
+      [missingKvp]="key" (fix)="onFix($event, i)"></app-fix-missing-key>
   </ng-container>
 
   <!--Toggle KVPs-->
@@ -83,22 +87,22 @@
       <div class="grow">
         <div class="row inner-spacer center-items">
           <span class="mono primary">{{kvp.key}}</span>
-          <input class="grow" type="text" [(ngModel)]="kvp.value" (ngModelChange)="translationService.markLanguageDirty$.next(language)"
-            autocomplete="off">
+          <input class="grow" type="text" [(ngModel)]="kvp.value"
+            (ngModelChange)="translationService.markLanguageDirty$.next(language)" autocomplete="off">
         </div>
         <div class="grow row inner-spacer center-items" *ngIf="isBaseLanguage && kvp.context != null">
           <i class="grow material-icons secondary-text">subdirectory_arrow_right</i>
           <span class="secondary-text">Context:</span>
-          <button class="icon" (click)="dropObjectKey(kvp, 'context'); translationService.markLanguageDirty$.next(language)"
-            matRipple>
+          <button class="icon"
+            (click)="dropObjectKey(kvp, 'context'); translationService.markLanguageDirty$.next(language)" matRipple>
             <i class="material-icons">cancel</i>
           </button>
-          <input class="input-edit-kvp-context max-width" type="text" [(ngModel)]="kvp.context" (ngModelChange)="translationService.markLanguageDirty$.next(language)"
-            autocomplete="off">
+          <input class="input-edit-kvp-context max-width" type="text" [(ngModel)]="kvp.context"
+            (ngModelChange)="translationService.markLanguageDirty$.next(language)" autocomplete="off">
         </div>
       </div>
-      <button class="icon onHover" *ngIf="isBaseLanguage && kvp.context === undefined" (click)="kvp.context = ''; translationService.markLanguageDirty$.next(language)"
-        matRipple>
+      <button class="icon onHover" *ngIf="isBaseLanguage && kvp.context === undefined"
+        (click)="kvp.context = ''; translationService.markLanguageDirty$.next(language)" matRipple>
         <i class="material-icons">add_comment</i>
       </button>
       <button class="icon onHover" (click)="dropKey(kvp)" matRipple>
@@ -108,8 +112,8 @@
   </ng-container>
 
   <!--KOPs-->
-  <app-kop *ngFor="let _kop of kop.KOPs; trackBy: trackByKop" [kop]="_kop" [language]="language" [isBaseLanguage]="isBaseLanguage"
-    (delete)="dropKop(_kop)"></app-kop>
+  <app-kop *ngFor="let _kop of kop.KOPs; trackBy: trackByKop" [kop]="_kop" [language]="language"
+    [isBaseLanguage]="isBaseLanguage" (delete)="dropKop(_kop)"></app-kop>
 
   <!--<pre>{{kop|json}}</pre>-->
 </div>
