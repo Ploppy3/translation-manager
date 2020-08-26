@@ -1,4 +1,4 @@
-import { Component, OnInit, DoCheck } from '@angular/core';
+import { Component, OnInit, DoCheck, HostListener } from '@angular/core';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SwUpdate } from '@angular/service-worker';
@@ -12,12 +12,19 @@ import { LoggerService } from 'src/app/services/logger.service';
 })
 export class AppComponent implements OnInit, DoCheck {
 
+  @HostListener('window:beforeunload')
+  confirmExit(event: BeforeUnloadEvent) {
+    event.preventDefault();
+    return event;
+  }
+
   constructor(
     private snackbarService: SnackbarService,
     private snackbar: MatSnackBar,
     private update: SwUpdate,
     private logger: LoggerService,
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     // --------------------------------------------------------------
