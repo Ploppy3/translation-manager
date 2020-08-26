@@ -1,9 +1,9 @@
 import { Component, OnInit, DoCheck } from '@angular/core';
-import { SnackbarService } from 'src/app/snackbar.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SwUpdate } from '@angular/service-worker';
 import { UpdateComponent } from 'src/app/update/update.component';
-import { LoggerService } from 'src/app/logger.service';
+import { LoggerService } from 'src/app/services/logger.service';
 
 @Component({
   selector: 'app-root',

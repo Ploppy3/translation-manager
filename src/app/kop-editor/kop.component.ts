@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChildren, QueryList, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { LangKOP, LangKVP } from 'src/app/structure';
-import { TranslationService } from 'src/app/translation.service';
+import { TranslationService } from 'src/app/services/translation.service';
 import { FixMissingKeyComponent } from 'src/app/kop-editor/fix-missing-key/fix-missing-key.component';
 import { fade } from 'src/app/animations';
-import { ConfirmDialogService } from 'src/app/confirm-dialog.service';
+import { ConfirmDialogService } from 'src/app/services/confirm-dialog.service';
 import { Subscription } from 'rxjs';
 import { CollapseService } from 'src/app/services/collapse.service';
 

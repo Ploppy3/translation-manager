@@ -1,5 +1,5 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { LoggerService } from 'src/app/logger.service';
+import { LoggerService } from 'src/app/services/logger.service';
 
 @Injectable({
   providedIn: 'root'

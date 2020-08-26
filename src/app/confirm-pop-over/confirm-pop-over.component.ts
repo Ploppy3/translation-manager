@@ -1,6 +1,6 @@
 import { Component, OnInit, HostBinding, HostListener } from '@angular/core';
 import { ConfirmDialogRef } from 'src/app/confirm-pop-over/confirm-pop-over-ref';
-import { trigger, state, transition, style, animate, query, group, animateChild } from '@angular/animations';
+import { trigger, state, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-confirm-dialog',

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
 import { createViewChildren } from '@angular/compiler/src/core';
-import { LoggerService } from 'src/app/logger.service';
+import { LoggerService } from 'src/app/services/logger.service';
 
 @Component({
   selector: 'app-content-editable',

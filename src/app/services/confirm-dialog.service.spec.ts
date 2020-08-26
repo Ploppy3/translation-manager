@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { ConfirmDialogService } from 'src/app/confirm-dialog.service';
+import { ConfirmDialogService } from 'src/app/services/confirm-dialog.service';
 
 describe('ConfirmDialogService', () => {
   beforeEach(() => {

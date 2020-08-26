@@ -1,10 +1,9 @@
 import { Injectable, Injector, ElementRef, NgZone } from '@angular/core';
 import { ComponentPortal, PortalInjector } from '@angular/cdk/portal';
-import { Overlay, GlobalPositionStrategy, ViewportRuler, FlexibleConnectedPositionStrategy } from '@angular/cdk/overlay';
+import { Overlay, GlobalPositionStrategy } from '@angular/cdk/overlay';
 import { ConfirmPopOverComponent } from 'src/app/confirm-pop-over/confirm-pop-over.component';
-import { LoggerService } from 'src/app/logger.service';
 import { ConfirmDialogRef } from 'src/app/confirm-pop-over/confirm-pop-over-ref';
-import { Subject } from 'rxjs';
+import { LoggerService } from "src/app/services/logger.service";
 
 @Injectable({
   providedIn: 'root',
