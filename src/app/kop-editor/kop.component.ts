@@ -52,8 +52,9 @@ export class KopEditorComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subs.push(
       this.collapseService.onCollapseAll$.subscribe(() => {
-        this.kop.showInputCreateChild = false;
         this.showCategoryCreator = false;
+        this.showKvpCreator = false;
+        this.kop.showInputCreateChild = false;
         this.kop.showKVPs = false;
         this.kop.showMissingKVPs = false;
       })
